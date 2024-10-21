@@ -1,8 +1,11 @@
 package com.example.iot_project_backserver.Controller;
 
 
+import com.example.iot_project_backserver.entity.app_user;
+import com.example.iot_project_backserver.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,9 @@ import java.util.Map;
 @RequestMapping("/signup")
 public class TestController {
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping
     public ResponseEntity<Map<String, String>> createNewUser(
             @RequestParam("email") String email,
@@ -24,6 +30,8 @@ public class TestController {
             @RequestParam("phoneNum") String phoneNum,
             @RequestParam("role") String role,
             @RequestParam(value = "userImage", required = false) MultipartFile userImage) {
+
+
 
         // 각 값을 변수에 저장
         String userEmail = email;
@@ -49,6 +57,19 @@ public class TestController {
         System.out.println("Birth: " + userBirth);
         System.out.println("PhoneNum: " + userPhoneNum);
         System.out.println("Role: " + userRole);
+
+
+        // user 엔티티 생성 및 값 설정
+        app_user newUser = new app_user();
+        newUser.setUser_id(email);
+        newUser.setPassword(password);
+        newUser.setName(username);
+        newUser.setBirth(birth);
+        newUser.setPhone_num(phoneNum);
+        newUser.setDivision(role);
+
+        // DB에 사용자 정보 저장
+        app_user savedUser = userService.saveUser(newUser);
 
         // 응답을 위한 맵 생성s
         Map<String, String> response = new HashMap<>();
