@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/signup")
-public class TestController {
+public class SignupController {
 
     @Autowired
     private UserService userService;
