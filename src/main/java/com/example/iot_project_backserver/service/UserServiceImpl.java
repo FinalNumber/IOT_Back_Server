@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
     public app_user saveUser(app_user newUser) {
         return userRepository.save(newUser);  // DB에 유저 저장
     }
+
+    @Override
+    public boolean existsByUserid(String userid) {
+        return userRepository.existsByUserid(userid);  // 이메일 중복 체크
+    }
 }

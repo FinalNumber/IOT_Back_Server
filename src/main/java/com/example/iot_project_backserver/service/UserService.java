@@ -12,4 +12,5 @@ public interface UserService {
     Optional<app_user> updateUser(String id, app_user updatedUser);  // 유저 정보 업데이트
     boolean deleteUser(String id);                // 유저 삭제
     app_user saveUser(app_user newUser);                 // 유저 저장 메소드 추가
+    boolean existsByUserid(String userid);               // 이메일 중복 체크 메소드 추가
 }

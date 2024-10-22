@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -15,19 +13,19 @@ import java.util.Date;
 public class app_user {
 
     @Id
-    private String user_id;
+    private String userid;
     private String password;
     private String name;
     private String birth;
     private String phone_num;
     private String division;
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getPassword() {
