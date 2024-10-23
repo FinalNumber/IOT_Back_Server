@@ -58,6 +58,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsByUserid(String userid) {
-        return userRepository.existsByUserid(userid);  // 이메일 중복 체크
+        return userRepository.existsByUserid(userid);  // ID 중복 체크
     }
 }
