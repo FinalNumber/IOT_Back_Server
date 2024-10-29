@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.crypto.password.PasswordEncoder; // 추가된 임포트
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,9 @@ public class SignupController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
 
     @PostMapping
     public ResponseEntity<Map<String, String>> createNewUser(
@@ -50,7 +54,11 @@ public class SignupController {
         // user 엔티티 생성 및 값 설정
         app_user newUser = new app_user();
         newUser.setUserid(email);
-        newUser.setPassword(password);
+
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(password);
+        newUser.setPassword(encodedPassword); // 암호화된 비밀번호 설정
+
         newUser.setName(username);
         newUser.setBirth(birth);
         newUser.setPhone_num(phoneNum);

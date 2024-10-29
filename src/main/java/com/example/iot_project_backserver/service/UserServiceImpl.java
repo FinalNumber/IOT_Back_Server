@@ -3,6 +3,7 @@ package com.example.iot_project_backserver.service;
 import com.example.iot_project_backserver.entity.app_user;
 import com.example.iot_project_backserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +25,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public app_user createUser(app_user newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword())); // 비밀번호 암호화
         return userRepository.save(newUser);
     }
 
@@ -33,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public Optional<app_user> updateUser(String id, app_user updatedUser) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    existingUser.setPassword(updatedUser.getPassword());
+                    existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
                     existingUser.setName(updatedUser.getName());
                     existingUser.setBirth(updatedUser.getBirth());
                     existingUser.setPhone_num(updatedUser.getPhone_num());
