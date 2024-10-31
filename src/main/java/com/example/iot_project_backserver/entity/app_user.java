@@ -21,6 +21,7 @@ public class app_user {
     private String birth;
     private String phone_num;
     private String division;
+    private String refresh_token;
 
     public String getUserid() {
         return userid;
@@ -68,5 +69,13 @@ public class app_user {
 
     public void setDivision(String division) {
         this.division = division;
+    }
+
+    public String getRefresh_token() {
+        return refresh_token;
+    }
+
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
     }
 }

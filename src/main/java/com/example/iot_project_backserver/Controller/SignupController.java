@@ -68,7 +68,7 @@ public class SignupController {
         app_user savedUser = userService.saveUser(newUser);
 
         // 응답을 위한 맵 생성
-        response.put("message", "User created successfully");
+        response.put("status", "success");
         response.put("email", email);
         response.put("username", username);
         response.put("birth", birth);

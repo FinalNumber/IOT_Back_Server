@@ -42,12 +42,21 @@ public class LoginController {
                 String accessToken = tokenProvider.generateAccessToken(user); // 억세스 토큰 생성
                 String refreshToken = tokenProvider.generateRefreshToken(user); // 리프레시 토큰 생성
 
+                user.setRefresh_token(refreshToken);
+                userService.saveUser(user); // 업데이트된 사용자 정보를 저장
+
                 System.out.println(accessToken);
                 System.out.println(refreshToken);
 
                 response.put("status", "success");
                 response.put("accessToken", accessToken); // 억세스 토큰 추가
                 response.put("refreshToken", refreshToken); // 리프레시 토큰 추가
+                response.put("userid", user.getUserid());
+                response.put("name", user.getName());
+                response.put("birth", user.getBirth());
+                response.put("phone_num", user.getPhone_num());
+                response.put("division", user.getDivision());
+
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 response.put("status", "PasswordFail"); // 비밀번호 불일치

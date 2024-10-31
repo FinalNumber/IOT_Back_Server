@@ -24,6 +24,10 @@ public class UserServiceImpl implements UserService {
     public Optional<app_user> getUserById(String id) {
         return userRepository.findById(id);
     }
+    @Override
+    public Optional<app_user> getRefresh_token(String Token) {
+        return userRepository.findByRefreshToken(Token);
+    }
 
     @Autowired
     private PasswordEncoder passwordEncoder;
