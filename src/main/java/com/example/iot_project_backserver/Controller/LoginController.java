@@ -31,6 +31,13 @@ public class LoginController {
                                                      @RequestParam("password") String password) {
         Map<String, String> response = new HashMap<>();
 
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(email);
+        System.out.println(password);
+
         // DB에서 사용자를 검색하여 인증
         Optional<app_user> userOptional = userService.getUserById(email);
 
