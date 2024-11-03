@@ -2,7 +2,7 @@ package com.example.iot_project_backserver.Controller;
 
 import com.example.iot_project_backserver.entity.app_user;
 import com.example.iot_project_backserver.service.UserService;
-import com.example.iot_project_backserver.config.jwt.TokenProvider; // TokenProvider 임포트
+import com.example.iot_project_backserver.config.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +24,12 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private TokenProvider tokenProvider; // TokenProvider 주입
+    private TokenProvider tokenProvider;
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> login(@RequestParam("email") String email,
+    public ResponseEntity<Map<String, Object>> login(@RequestParam("email") String email,
                                                      @RequestParam("password") String password) {
-        Map<String, String> response = new HashMap<>();
-
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(email);
-        System.out.println(password);
+        Map<String, Object> response = new HashMap<>();
 
         // DB에서 사용자를 검색하여 인증
         Optional<app_user> userOptional = userService.getUserById(email);
@@ -46,23 +39,25 @@ public class LoginController {
 
             // 비밀번호가 일치하는지 확인
             if (passwordEncoder.matches(password, user.getPassword())) {
-                String accessToken = tokenProvider.generateAccessToken(user); // 억세스 토큰 생성
-                String refreshToken = tokenProvider.generateRefreshToken(user); // 리프레시 토큰 생성
+                String accessToken = tokenProvider.generateAccessToken(user);
+                String refreshToken = tokenProvider.generateRefreshToken(user);
 
                 user.setRefresh_token(refreshToken);
-                userService.saveUser(user); // 업데이트된 사용자 정보를 저장
+                userService.saveUser(user);
 
-                System.out.println(accessToken);
-                System.out.println(refreshToken);
+                // DT에 응답 데이터 넣기
+                Map<String, String> responseData = new HashMap<>();
+                responseData.put("accessToken", accessToken);
+                responseData.put("refreshToken", refreshToken);
+                responseData.put("userid", user.getUserid());
+                responseData.put("name", user.getName());
+                responseData.put("birth", user.getBirth());
+                responseData.put("phone_num", user.getPhone_num());
+                responseData.put("division", user.getDivision());
+                responseData.put("status", "success");
 
                 response.put("status", "success");
-                response.put("accessToken", accessToken); // 억세스 토큰 추가
-                response.put("refreshToken", refreshToken); // 리프레시 토큰 추가
-                response.put("userid", user.getUserid());
-                response.put("name", user.getName());
-                response.put("birth", user.getBirth());
-                response.put("phone_num", user.getPhone_num());
-                response.put("division", user.getDivision());
+                response.put("data", responseData);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
