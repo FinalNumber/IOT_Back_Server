@@ -27,16 +27,6 @@ public class DesiredController {
     public ResponseEntity<Map<String, Object>> desired(@RequestParam("email") String userid,
                                                        @RequestParam("noteDate") String desired_date,
                                                        @RequestParam("noteContent") String text) {
-        System.out.println(userid);
-        System.out.println(desired_date);
-        System.out.println(text);
-        System.out.println(userid);
-        System.out.println(desired_date);
-        System.out.println(text);
-        System.out.println(userid);
-        System.out.println(desired_date);
-        System.out.println(text);
-
 
         desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, desired_date, text);
 
