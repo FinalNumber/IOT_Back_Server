@@ -1,30 +1,42 @@
 package com.example.iot_project_backserver.service;
 
+import com.example.iot_project_backserver.entity.app_user;
 import com.example.iot_project_backserver.entity.desired_volunteer_date;
 import com.example.iot_project_backserver.repository.DesiredVolunteerDateRepository;
+import com.example.iot_project_backserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DesiredService {
 
     private final DesiredVolunteerDateRepository desiredVolunteerDateRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public DesiredService(DesiredVolunteerDateRepository desiredVolunteerDateRepository) {
+    public DesiredService(DesiredVolunteerDateRepository desiredVolunteerDateRepository, UserRepository userRepository) {
         this.desiredVolunteerDateRepository = desiredVolunteerDateRepository;
+        this.userRepository = userRepository;
     }
 
     public desired_volunteer_date saveDesiredVolunteerDate(String userid, String desired_date, String text) {
-        desired_volunteer_date desiredVolunteerDate = desired_volunteer_date.builder()
-                .userid(userid)
-                .desired_date(desired_date)
-                .text(text)
-                .build();
+        Optional<app_user> appUserOptional = userRepository.findById(userid);
 
-        return desiredVolunteerDateRepository.save(desiredVolunteerDate);
+        if (appUserOptional.isPresent()) {
+            desired_volunteer_date desiredVolunteerDate = desired_volunteer_date.builder()
+                    .userid(userid)
+                    .desired_date(desired_date)
+                    .text(text)
+                    .app_user(appUserOptional.get()) // 올바른 변수명 사용
+                    .build();
+
+            return desiredVolunteerDateRepository.save(desiredVolunteerDate);
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userid);
+        }
     }
 
     public List<desired_volunteer_date> getAllDesiredVolunteerDates() {
