@@ -69,7 +69,7 @@ public class SignupController {
         // role이 volunteer인 경우 volunteer 테이블에도 저장
         if ("volunteer".equalsIgnoreCase(role)) {
             volunteer newVolunteer = new volunteer();
-            newVolunteer.setVolunteer_id(userid);
+            newVolunteer.setVolunteerid(userid);
             newVolunteer.setVolunteer_time(0); // 초기 값 설정
             volunteerService.saveVolunteer(newVolunteer); // VolunteerService를 통해 저장
         }
