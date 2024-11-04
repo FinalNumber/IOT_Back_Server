@@ -1,7 +1,10 @@
 package com.example.iot_project_backserver.Controller;
 
+import com.example.iot_project_backserver.dto.CombinedVolunteerData;
 import com.example.iot_project_backserver.entity.desired_volunteer_date;
+import com.example.iot_project_backserver.entity.volunteer_assignment;
 import com.example.iot_project_backserver.service.DesiredService;
+import com.example.iot_project_backserver.service.VolunteerAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +18,20 @@ import java.util.List;
 public class VolunteerDesiredController {
 
     private final DesiredService desiredService;
+    private final VolunteerAssignmentService volunteerAssignmentService;
 
     @Autowired
-    public VolunteerDesiredController(DesiredService desiredService) {
+    public VolunteerDesiredController(DesiredService desiredService, VolunteerAssignmentService volunteerAssignmentService) {
         this.desiredService = desiredService;
+        this.volunteerAssignmentService = volunteerAssignmentService;
     }
 
     @GetMapping
-    public ResponseEntity<List<desired_volunteer_date>> getAllDesiredVolunteerDates() {
+    public ResponseEntity<CombinedVolunteerData> getAllVolunteerData() {
         List<desired_volunteer_date> desiredVolunteerDates = desiredService.getAllDesiredVolunteerDates();
-        return ResponseEntity.ok(desiredVolunteerDates);
+        List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getAllVolunteerAssignments();
+
+        CombinedVolunteerData combinedData = new CombinedVolunteerData(desiredVolunteerDates, volunteerAssignments);
+        return ResponseEntity.ok(combinedData);
     }
 }

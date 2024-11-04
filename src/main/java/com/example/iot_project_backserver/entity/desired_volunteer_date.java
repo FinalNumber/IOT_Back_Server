@@ -17,7 +17,7 @@ public class desired_volunteer_date {
     @Id
     private String userid;
     @Id
-    private String desired_date;
+    private String desireddate;
     private String text;
 
     @ManyToOne

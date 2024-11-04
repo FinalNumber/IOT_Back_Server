@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class DesiredVolunteerDateId implements Serializable {
     private String userid;
-    private String desired_date;
+    private String desireddate;
 }

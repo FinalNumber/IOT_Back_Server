@@ -2,6 +2,7 @@ package com.example.iot_project_backserver.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@IdClass(VolunteerAssignmentId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

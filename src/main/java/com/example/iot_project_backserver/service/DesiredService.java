@@ -4,6 +4,7 @@ import com.example.iot_project_backserver.entity.app_user;
 import com.example.iot_project_backserver.entity.desired_volunteer_date;
 import com.example.iot_project_backserver.repository.DesiredVolunteerDateRepository;
 import com.example.iot_project_backserver.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,13 @@ public class DesiredService {
         this.userRepository = userRepository;
     }
 
-    public desired_volunteer_date saveDesiredVolunteerDate(String userid, String desired_date, String text) {
+    public desired_volunteer_date saveDesiredVolunteerDate(String userid, String desireddate, String text) {
         Optional<app_user> appUserOptional = userRepository.findById(userid);
 
         if (appUserOptional.isPresent()) {
             desired_volunteer_date desiredVolunteerDate = desired_volunteer_date.builder()
                     .userid(userid)
-                    .desired_date(desired_date)
+                    .desireddate(desireddate)
                     .text(text)
                     .app_user(appUserOptional.get()) // 올바른 변수명 사용
                     .build();
@@ -45,5 +46,10 @@ public class DesiredService {
 
     public List<desired_volunteer_date> getDesiredVolunteerDatesByUserid(String userid) {
         return desiredVolunteerDateRepository.findByUserid(userid);
+    }
+
+    @Transactional
+    public void deleteDesiredVolunteerDateByUseridAndDate(String userid, String desireddate) {
+        desiredVolunteerDateRepository.deleteByUseridAndDesireddate(userid, desireddate);
     }
 }

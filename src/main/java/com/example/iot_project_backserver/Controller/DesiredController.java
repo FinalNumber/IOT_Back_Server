@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.controller;
+package com.example.iot_project_backserver.Controller;
 
 import com.example.iot_project_backserver.entity.desired_volunteer_date;
 import com.example.iot_project_backserver.service.DesiredService;
@@ -25,10 +25,10 @@ public class DesiredController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> desired(@RequestParam("email") String userid,
-                                                       @RequestParam("noteDate") String desired_date,
+                                                       @RequestParam("noteDate") String desireddate,
                                                        @RequestParam("noteContent") String text) {
 
-        desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, desired_date, text);
+        desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, desireddate, text);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
