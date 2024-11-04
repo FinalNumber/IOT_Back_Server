@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.entity;
+package com.example.iot_project_backserver.entity.Volunteer;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,5 +22,5 @@ public class desired_volunteer_date {
 
     @ManyToOne
     @JoinColumn(name = "userid", insertable = false, updatable = false)
-    private app_user app_user;
+    private com.example.iot_project_backserver.entity.app_user app_user;
 }

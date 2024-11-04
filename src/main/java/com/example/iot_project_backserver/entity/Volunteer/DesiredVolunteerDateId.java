@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.entity;
+package com.example.iot_project_backserver.entity.Volunteer;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

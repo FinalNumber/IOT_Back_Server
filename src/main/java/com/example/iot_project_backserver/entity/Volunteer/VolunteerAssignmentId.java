@@ -1,11 +1,10 @@
-package com.example.iot_project_backserver.entity;
+package com.example.iot_project_backserver.entity.Volunteer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor

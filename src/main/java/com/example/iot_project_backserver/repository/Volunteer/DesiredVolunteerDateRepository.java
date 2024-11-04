@@ -1,6 +1,6 @@
-package com.example.iot_project_backserver.repository;
+package com.example.iot_project_backserver.repository.Volunteer;
 
-import com.example.iot_project_backserver.entity.desired_volunteer_date;
+import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

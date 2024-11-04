@@ -1,8 +1,8 @@
-package com.example.iot_project_backserver.service;
+package com.example.iot_project_backserver.service.Volunteer;
 
 import com.example.iot_project_backserver.entity.app_user;
-import com.example.iot_project_backserver.entity.desired_volunteer_date;
-import com.example.iot_project_backserver.repository.DesiredVolunteerDateRepository;
+import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
+import com.example.iot_project_backserver.repository.Volunteer.DesiredVolunteerDateRepository;
 import com.example.iot_project_backserver.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

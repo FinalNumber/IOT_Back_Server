@@ -1,7 +1,7 @@
-package com.example.iot_project_backserver.Controller;
+package com.example.iot_project_backserver.Controller.Volunteer;
 
-import com.example.iot_project_backserver.entity.desired_volunteer_date;
-import com.example.iot_project_backserver.service.DesiredService;
+import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
+import com.example.iot_project_backserver.service.Volunteer.DesiredService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

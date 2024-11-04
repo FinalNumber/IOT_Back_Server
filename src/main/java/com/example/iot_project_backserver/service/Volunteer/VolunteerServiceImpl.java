@@ -1,8 +1,7 @@
-package com.example.iot_project_backserver.service;
+package com.example.iot_project_backserver.service.Volunteer;
 
-import com.example.iot_project_backserver.entity.volunteer;
-import com.example.iot_project_backserver.repository.VolunteerRepository;
-import com.example.iot_project_backserver.service.VolunteerService;
+import com.example.iot_project_backserver.entity.Volunteer.volunteer;
+import com.example.iot_project_backserver.repository.Volunteer.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

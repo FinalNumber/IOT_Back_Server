@@ -1,10 +1,10 @@
-package com.example.iot_project_backserver.Controller;
+package com.example.iot_project_backserver.Controller.Volunteer;
 
 import com.example.iot_project_backserver.dto.CombinedVolunteerData;
-import com.example.iot_project_backserver.entity.desired_volunteer_date;
-import com.example.iot_project_backserver.entity.volunteer_assignment;
-import com.example.iot_project_backserver.service.DesiredService;
-import com.example.iot_project_backserver.service.VolunteerAssignmentService;
+import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
+import com.example.iot_project_backserver.entity.Volunteer.volunteer_assignment;
+import com.example.iot_project_backserver.service.Volunteer.DesiredService;
+import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
