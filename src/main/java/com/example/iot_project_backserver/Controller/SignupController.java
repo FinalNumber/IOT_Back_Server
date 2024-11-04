@@ -1,7 +1,9 @@
 package com.example.iot_project_backserver.Controller;
 
 import com.example.iot_project_backserver.entity.app_user;
+import com.example.iot_project_backserver.entity.volunteer;
 import com.example.iot_project_backserver.service.UserService;
+import com.example.iot_project_backserver.service.VolunteerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class SignupController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VolunteerService volunteerService; // VolunteerService 주입
 
     @Autowired
     private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
@@ -45,12 +50,6 @@ public class SignupController {
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
-        // userImage는 MultipartFile 타입이므로 추가적인 처리가 필요할 수 있음
-        if (userImage != null) {
-            String userImageName = userImage.getOriginalFilename(); // 이미지 파일 이름
-            System.out.println("Uploaded Image Name: " + userImageName);
-        }
-
         // user 엔티티 생성 및 값 설정
         app_user newUser = new app_user();
         newUser.setUserid(email);
@@ -66,6 +65,14 @@ public class SignupController {
 
         // DB에 사용자 정보 저장
         app_user savedUser = userService.saveUser(newUser);
+
+        // role이 volunteer인 경우 volunteer 테이블에도 저장
+        if ("volunteer".equalsIgnoreCase(role)) {
+            volunteer newVolunteer = new volunteer();
+            newVolunteer.setVolunteer_id(userid);
+            newVolunteer.setVolunteer_time(0); // 초기 값 설정
+            volunteerService.saveVolunteer(newVolunteer); // VolunteerService를 통해 저장
+        }
 
         // 응답을 위한 맵 생성
         response.put("status", "success");
