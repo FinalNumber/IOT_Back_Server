@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class volunteer {
     @Id
     private String volunteerid;
-    private int volunteer_time;
+    private int volunteertime;
 }

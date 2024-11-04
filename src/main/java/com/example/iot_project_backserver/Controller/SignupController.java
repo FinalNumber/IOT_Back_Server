@@ -70,7 +70,7 @@ public class SignupController {
         if ("volunteer".equalsIgnoreCase(role)) {
             volunteer newVolunteer = new volunteer();
             newVolunteer.setVolunteerid(userid);
-            newVolunteer.setVolunteer_time(0); // 초기 값 설정
+            newVolunteer.setVolunteertime(0); // 초기 값 설정
             volunteerService.saveVolunteer(newVolunteer); // VolunteerService를 통해 저장
         }
 

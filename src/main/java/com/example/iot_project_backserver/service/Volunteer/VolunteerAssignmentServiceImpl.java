@@ -18,11 +18,11 @@ public class VolunteerAssignmentServiceImpl implements VolunteerAssignmentServic
     }
 
     @Override
-    public volunteer_assignment saveVolunteerAssignment(String volunteerid, String userid, String assignment_date, String text) {
+    public volunteer_assignment saveVolunteerAssignment(String volunteerid, String userid, String assignmentdate, String text) {
         volunteer_assignment volunteerAssignment = volunteer_assignment.builder()
                 .volunteerid(volunteerid)
                 .userid(userid)
-                .assignment_date(assignment_date)
+                .assignmentdate(assignmentdate)
                 .text(text)
                 .build();
 
@@ -32,5 +32,13 @@ public class VolunteerAssignmentServiceImpl implements VolunteerAssignmentServic
     @Override
     public List<volunteer_assignment> getVolunteerAssignmentsByVolunteerid(String volunteerid) {
         return volunteerAssignmentRepository.findByVolunteerid(volunteerid);
+    }
+    @Override
+    public List<volunteer_assignment> getVolunteerAssignmentsByUserid(String userid) {
+        return volunteerAssignmentRepository.findByUserid(userid);
+    }
+    @Override
+    public void deleteAssignment(String volunteerid, String userid, String assignmentdate) {
+        volunteerAssignmentRepository.deleteByVolunteeridAndUseridAndAssignmentdate(volunteerid, userid, assignmentdate);
     }
 }

@@ -15,4 +15,9 @@ public class VolunteerServiceImpl implements VolunteerService {
     public volunteer saveVolunteer(volunteer newVolunteer) {
         return volunteerRepository.save(newVolunteer);
     }
+
+    @Override
+    public void incrementVolunteertime(String volunteerid) {
+        volunteerRepository.incrementVolunteertime(volunteerid);
+    }
 }

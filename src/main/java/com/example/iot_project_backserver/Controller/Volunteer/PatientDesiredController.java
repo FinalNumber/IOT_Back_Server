@@ -1,7 +1,10 @@
 package com.example.iot_project_backserver.Controller.Volunteer;
 
+import com.example.iot_project_backserver.dto.PatientVolunteerData;
 import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
+import com.example.iot_project_backserver.entity.Volunteer.volunteer_assignment;
 import com.example.iot_project_backserver.service.Volunteer.DesiredService;
+import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +19,20 @@ import java.util.List;
 public class PatientDesiredController {
 
     private final DesiredService desiredService;
+    private final VolunteerAssignmentService volunteerAssignmentService;
 
     @Autowired
-    public PatientDesiredController(DesiredService desiredService) {
+    public PatientDesiredController(DesiredService desiredService, VolunteerAssignmentService volunteerAssignmentService) {
         this.desiredService = desiredService;
+        this.volunteerAssignmentService = volunteerAssignmentService;
     }
 
     @PostMapping
-    public ResponseEntity<List<desired_volunteer_date>> callpatient(@RequestParam("email") String userid) {
-        // userid에 해당하는 모든 데이터 조회
+    public ResponseEntity<PatientVolunteerData> callpatient(@RequestParam("email") String userid) {
         List<desired_volunteer_date> desiredVolunteerDates = desiredService.getDesiredVolunteerDatesByUserid(userid);
+        List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByUserid(userid);
 
-        return ResponseEntity.ok(desiredVolunteerDates);
+        PatientVolunteerData responseData = new PatientVolunteerData(desiredVolunteerDates, volunteerAssignments);
+        return ResponseEntity.ok(responseData);
     }
 }

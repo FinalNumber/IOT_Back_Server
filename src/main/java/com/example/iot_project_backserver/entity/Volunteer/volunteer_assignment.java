@@ -17,7 +17,7 @@ public class volunteer_assignment {
     private String volunteerid;
     @Id
     private String userid;
-    private String assignment_date;
+    private String assignmentdate;
     private String text;
 
     @ManyToOne

@@ -31,11 +31,11 @@ public class VolunteerAssignmentController {
     public ResponseEntity<Map<String, Object>> volunteerassignment(
             @RequestParam("email") String volunteer_id,
             @RequestParam("userid") String userid,
-            @RequestParam("notedate") String assignment_date, @RequestParam("text") String text) {
+            @RequestParam("notedate") String assignmentdate, @RequestParam("text") String text) {
 
-        volunteer_assignment savedAssignment = volunteerAssignmentService.saveVolunteerAssignment(volunteer_id, userid, assignment_date, text);
+        volunteer_assignment savedAssignment = volunteerAssignmentService.saveVolunteerAssignment(volunteer_id, userid, assignmentdate, text);
 
-        desiredService.deleteDesiredVolunteerDateByUseridAndDate(userid, assignment_date);
+        desiredService.deleteDesiredVolunteerDateByUseridAndDate(userid, assignmentdate);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
