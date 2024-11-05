@@ -52,4 +52,17 @@ public class DesiredService {
     public void deleteDesiredVolunteerDateByUseridAndDate(String userid, String desireddate) {
         desiredVolunteerDateRepository.deleteByUseridAndDesireddate(userid, desireddate);
     }
+    @Transactional
+    public boolean updateDesiredVolunteerDate(String userid, String desireddate, String text) {
+        Optional<desired_volunteer_date> optionalRecord = desiredVolunteerDateRepository.findByUseridAndDesireddate(userid, desireddate);
+
+        if (optionalRecord.isPresent()) {
+            desired_volunteer_date record = optionalRecord.get();
+            record.setText(text); // 새로운 텍스트로 업데이트
+            desiredVolunteerDateRepository.save(record);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

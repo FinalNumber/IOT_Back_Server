@@ -2,6 +2,7 @@ package com.example.iot_project_backserver.Controller.Volunteer;
 
 import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
 import com.example.iot_project_backserver.service.Volunteer.VolunteerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,18 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/volunteercomplete")
 public class VolunteerCPController {
 
     private final VolunteerAssignmentService volunteerAssignmentService;
     private final VolunteerService volunteerService;
-
-    @Autowired
-    public VolunteerCPController(VolunteerAssignmentService volunteerAssignmentService, VolunteerService volunteerService) {
-        this.volunteerAssignmentService = volunteerAssignmentService;
-        this.volunteerService = volunteerService;
-    }
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> volunteerComplete(

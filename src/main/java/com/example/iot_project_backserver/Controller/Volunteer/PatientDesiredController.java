@@ -5,6 +5,7 @@ import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_dat
 import com.example.iot_project_backserver.entity.Volunteer.volunteer_assignment;
 import com.example.iot_project_backserver.service.Volunteer.DesiredService;
 import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,18 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/callpatient")
 public class PatientDesiredController {
 
     private final DesiredService desiredService;
     private final VolunteerAssignmentService volunteerAssignmentService;
-
-    @Autowired
-    public PatientDesiredController(DesiredService desiredService, VolunteerAssignmentService volunteerAssignmentService) {
-        this.desiredService = desiredService;
-        this.volunteerAssignmentService = volunteerAssignmentService;
-    }
 
     @PostMapping
     public ResponseEntity<PatientVolunteerData> callpatient(@RequestParam("email") String userid) {
