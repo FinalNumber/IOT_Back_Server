@@ -31,18 +31,6 @@ public class VolunteerCPController {
             @RequestParam("userid") String userid,
             @RequestParam("notedate") String assignmentdate) {
 
-        System.out.println(volunteerid);
-        System.out.println(volunteerid);
-        System.out.println(userid);
-        System.out.println(assignmentdate);
-        System.out.println(volunteerid);
-        System.out.println(userid);
-        System.out.println(assignmentdate);
-        System.out.println(volunteerid);
-        System.out.println(userid);
-        System.out.println(assignmentdate);
-        System.out.println(userid);
-        System.out.println(assignmentdate);
         volunteerAssignmentService.deleteAssignment(volunteerid, userid, assignmentdate);
 
         // volunteer 테이블에서 volunteer_time 증가
