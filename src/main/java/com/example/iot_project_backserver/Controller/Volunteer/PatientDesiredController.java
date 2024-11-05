@@ -17,14 +17,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/callpatient")
+@RequestMapping("/patientvolunteercall")
 public class PatientDesiredController {
 
     private final DesiredService desiredService;
     private final VolunteerAssignmentService volunteerAssignmentService;
 
     @PostMapping
-    public ResponseEntity<PatientVolunteerData> callpatient(@RequestParam("email") String userid) {
+    public ResponseEntity<PatientVolunteerData> callpatient(@RequestParam("userid") String userid) {
         List<desired_volunteer_date> desiredVolunteerDates = desiredService.getDesiredVolunteerDatesByUserid(userid);
         List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByUserid(userid);
 

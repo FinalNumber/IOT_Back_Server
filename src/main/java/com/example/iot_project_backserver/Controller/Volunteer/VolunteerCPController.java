@@ -23,9 +23,9 @@ public class VolunteerCPController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> volunteerComplete(
-            @RequestParam("email") String volunteerid,
+            @RequestParam("volunteerid") String volunteerid,
             @RequestParam("userid") String userid,
-            @RequestParam("notedate") String assignmentdate) {
+            @RequestParam("assignmentdate") String assignmentdate) {
 
         volunteerAssignmentService.deleteAssignment(volunteerid, userid, assignmentdate);
 

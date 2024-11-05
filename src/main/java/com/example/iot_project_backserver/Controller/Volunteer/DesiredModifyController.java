@@ -15,14 +15,14 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/callvolunteermodify")
+@RequestMapping("/volunteercallmodify")
 public class DesiredModifyController {
 
     private final DesiredService desiredService;
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> callvolunteermodify(@RequestParam("email") String userid,
-                                                       @RequestParam("notedate") String desireddate,
+    public ResponseEntity<Map<String, Object>> callvolunteermodify(@RequestParam("userid") String userid,
+                                                       @RequestParam("desireddate") String desireddate,
                                                        @RequestParam("text") String text) {
 
         boolean isUpdated = desiredService.updateDesiredVolunteerDate(userid, desireddate, text);

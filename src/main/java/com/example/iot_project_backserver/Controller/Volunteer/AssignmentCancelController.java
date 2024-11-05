@@ -22,8 +22,8 @@ public class AssignmentCancelController {
     private final VolunteerAssignmentService volunteerAssignmentService;
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> assignmentcancel(@RequestParam("email") String volunteerid,
-                                                     @RequestParam("userid") String userid, @RequestParam("notedate") String assignmentdate, @RequestParam("text") String text) {
+    public ResponseEntity<Map<String, Object>> assignmentcancel(@RequestParam("volunteerid") String volunteerid,
+                                                     @RequestParam("userid") String userid, @RequestParam("assignmentdate") String assignmentdate, @RequestParam("text") String text) {
         desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, assignmentdate, text);
         volunteerAssignmentService.deleteAssignment(volunteerid, userid, assignmentdate);
 

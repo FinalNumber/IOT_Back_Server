@@ -21,9 +21,9 @@ public class DesiredController {
     private final DesiredService desiredService;
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> desired(@RequestParam("email") String userid,
-                                                       @RequestParam("noteDate") String desireddate,
-                                                       @RequestParam("noteContent") String text) {
+    public ResponseEntity<Map<String, Object>> desired(@RequestParam("userid") String userid,
+                                                       @RequestParam("desireddate") String desireddate,
+                                                       @RequestParam("text") String text) {
 
         desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, desireddate, text);
 

@@ -14,14 +14,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/allcallvolunteer")
+@RequestMapping("/allvolunteercall")
 public class VolunteerDesiredController {
 
     private final DesiredService desiredService;
     private final VolunteerAssignmentService volunteerAssignmentService;
 
     @PostMapping
-    public ResponseEntity<CombinedVolunteerData> postAllVolunteerData(@RequestParam("email") String volunteerid) {
+    public ResponseEntity<CombinedVolunteerData> postAllVolunteerData(@RequestParam("volunteerid") String volunteerid) {
         List<desired_volunteer_date> desiredVolunteerDates = desiredService.getAllDesiredVolunteerDates();
         List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByVolunteerid(volunteerid);
 

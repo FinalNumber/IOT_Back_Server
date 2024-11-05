@@ -25,11 +25,11 @@ public class VolunteerAssignmentController {
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> volunteerassignment(
-            @RequestParam("email") String volunteer_id,
+            @RequestParam("volunteerid") String volunteerid,
             @RequestParam("userid") String userid,
-            @RequestParam("notedate") String assignmentdate, @RequestParam("text") String text) {
+            @RequestParam("assignmentdate") String assignmentdate, @RequestParam("text") String text) {
 
-        volunteer_assignment savedAssignment = volunteerAssignmentService.saveVolunteerAssignment(volunteer_id, userid, assignmentdate, text);
+        volunteer_assignment savedAssignment = volunteerAssignmentService.saveVolunteerAssignment(volunteerid, userid, assignmentdate, text);
 
         desiredService.deleteDesiredVolunteerDateByUseridAndDate(userid, assignmentdate);
 
