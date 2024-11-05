@@ -21,7 +21,7 @@ public class VolunteerDesiredController {
     private final VolunteerAssignmentService volunteerAssignmentService;
 
     @PostMapping
-    public ResponseEntity<CombinedVolunteerData> postAllVolunteerData(@RequestParam("volunteerid") String volunteerid) {
+    public ResponseEntity<CombinedVolunteerData> postAllVolunteerData(@RequestParam("userid") String volunteerid) {
         List<desired_volunteer_date> desiredVolunteerDates = desiredService.getAllDesiredVolunteerDates();
         List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByVolunteerid(volunteerid);
 

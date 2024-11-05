@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/volunteerassignment").permitAll()
                         .requestMatchers("/volunteercomplete").permitAll()
                         .requestMatchers("/assignmentcancel").permitAll()
-                        .requestMatchers("//volunteercallmodify").permitAll()
+                        .requestMatchers("/volunteercallmodify").permitAll()
                         .requestMatchers("/volunteercalldelete").permitAll()
                         .anyRequest().authenticated()  // 그 외의 요청은 인증 필요
                 )
