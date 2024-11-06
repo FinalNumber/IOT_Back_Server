@@ -1,5 +1,6 @@
 package com.example.iot_project_backserver.entity.Volunteer;
 
+import com.example.iot_project_backserver.entity.User.app_user;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,9 +23,9 @@ public class volunteer_assignment {
 
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
-    private com.example.iot_project_backserver.entity.app_user userByUserid;
+    private app_user userByUserid;
 
     @ManyToOne
     @JoinColumn(name = "volunteerid", referencedColumnName = "userid", insertable = false, updatable = false)
-    private com.example.iot_project_backserver.entity.app_user userByVolunteerId;
+    private app_user userByVolunteerId;
 }

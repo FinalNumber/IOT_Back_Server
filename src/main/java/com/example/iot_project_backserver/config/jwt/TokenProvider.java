@@ -1,6 +1,6 @@
 package com.example.iot_project_backserver.config.jwt;
 
-import com.example.iot_project_backserver.entity.app_user;
+import com.example.iot_project_backserver.entity.User.app_user;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;

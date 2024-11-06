@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.entity;
+package com.example.iot_project_backserver.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

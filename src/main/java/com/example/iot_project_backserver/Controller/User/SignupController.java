@@ -1,8 +1,8 @@
-package com.example.iot_project_backserver.Controller;
+package com.example.iot_project_backserver.Controller.User;
 
-import com.example.iot_project_backserver.entity.app_user;
+import com.example.iot_project_backserver.entity.User.app_user;
 import com.example.iot_project_backserver.entity.Volunteer.volunteer;
-import com.example.iot_project_backserver.service.UserService;
+import com.example.iot_project_backserver.service.User.UserService;
 import com.example.iot_project_backserver.service.Volunteer.VolunteerService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,8 +1,9 @@
-package com.example.iot_project_backserver.service;
+package com.example.iot_project_backserver.service.User;
 
-import com.example.iot_project_backserver.entity.app_user;
+import com.example.iot_project_backserver.entity.User.app_user;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -20,4 +21,8 @@ public interface UserService {
     app_user saveUser(app_user newUser);                 // 유저 저장 메소드 추가
 
     boolean existsByUserid(String userid);
+
+    List<Map<String, String>> getUserInfoByName(String name);
+
+    Optional<Map<String, String>> getUserInfoByUserid(String userid);
 }

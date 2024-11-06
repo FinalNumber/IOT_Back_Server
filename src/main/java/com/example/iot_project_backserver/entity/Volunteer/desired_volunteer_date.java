@@ -22,5 +22,5 @@ public class desired_volunteer_date {
 
     @ManyToOne
     @JoinColumn(name = "userid", insertable = false, updatable = false)
-    private com.example.iot_project_backserver.entity.app_user app_user;
+    private com.example.iot_project_backserver.entity.User.app_user app_user;
 }

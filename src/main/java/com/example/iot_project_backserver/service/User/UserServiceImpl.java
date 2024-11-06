@@ -1,12 +1,13 @@
-package com.example.iot_project_backserver.service;
+package com.example.iot_project_backserver.service.User;
 
-import com.example.iot_project_backserver.entity.app_user;
-import com.example.iot_project_backserver.repository.UserRepository;
+import com.example.iot_project_backserver.entity.User.app_user;
+import com.example.iot_project_backserver.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -68,5 +69,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUserid(String userid) {
         return userRepository.existsByUserid(userid);  // ID 중복 체크
+    }
+
+    @Override
+    public List<Map<String, String>> getUserInfoByName(String name) {
+        return userRepository.findByName(name)
+                .stream()
+                .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()))
+                .toList();
+    }
+
+    @Override
+    public Optional<Map<String, String>> getUserInfoByUserid(String userid) {
+        return userRepository.findById(userid)
+                .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()));
     }
 }
