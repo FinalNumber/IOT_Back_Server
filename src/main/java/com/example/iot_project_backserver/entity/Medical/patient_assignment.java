@@ -1,6 +1,6 @@
 package com.example.iot_project_backserver.entity.Medical;
 
-import com.example.iot_project_backserver.dto.Medical.PatientAssignmentId;
+import com.example.iot_project_backserver.dto.PatientAssignmentId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
