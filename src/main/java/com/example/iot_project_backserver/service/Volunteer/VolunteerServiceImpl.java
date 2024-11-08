@@ -5,6 +5,8 @@ import com.example.iot_project_backserver.repository.Volunteer.VolunteerReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VolunteerServiceImpl implements VolunteerService {
 
@@ -19,5 +21,11 @@ public class VolunteerServiceImpl implements VolunteerService {
     @Override
     public void incrementVolunteertime(String volunteerid) {
         volunteerRepository.incrementVolunteertime(volunteerid);
+    }
+
+    @Override
+    public Optional<Integer> getVolunteerTimeById(String volunteerid) {
+        Optional<volunteer> volunteerRecord = volunteerRepository.findById(volunteerid);
+        return volunteerRecord.map(volunteer::getVolunteertime);
     }
 }

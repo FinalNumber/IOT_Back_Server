@@ -1,9 +1,7 @@
 package com.example.iot_project_backserver.entity.Medical;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.example.iot_project_backserver.dto.Medical.PatientAssignmentId;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@IdClass(PatientAssignmentId.class)
 public class patient_assignment {
     @Id
     private String medicalid;
