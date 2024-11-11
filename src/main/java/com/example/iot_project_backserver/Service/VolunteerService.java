@@ -25,4 +25,6 @@ public interface VolunteerService {
     volunteer saveVolunteer(volunteer newVolunteer);
     void incrementVolunteertime(String volunteerid);
     Optional<Integer> getVolunteerTimeById(String volunteerid);
+
+    boolean validateRefreshToken(String userid, String refreshToken);
 }

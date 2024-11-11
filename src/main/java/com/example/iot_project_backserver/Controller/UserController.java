@@ -138,4 +138,21 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    @PostMapping("/tokencheck")
+    public ResponseEntity<Map<String, String>> tokencheck(@RequestParam("userid") String userid, @RequestParam("refreshToken") String refreshToken) {
+
+        // 리프레시 토큰 검증
+        boolean isTokenValid = volunteerService.validateRefreshToken(userid, refreshToken);
+        System.out.println("Is token valid: " + isTokenValid);
+
+        Map<String, String> response = new HashMap<>();
+        if (!isTokenValid) {
+            response.put("status", "TokenInvalid");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            response.put("status", "success");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
 }

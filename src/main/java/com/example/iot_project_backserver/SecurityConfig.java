@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/loadmeasure").permitAll()
                         .requestMatchers("/modifymeasure").permitAll()
                         .requestMatchers("/volunteertime").permitAll()
+                        .requestMatchers("/tokencheck").permitAll()
                         .anyRequest().authenticated()  // 그 외의 요청은 인증 필요
                 )
                 .formLogin().disable();  // 로그인 폼을 비활성화, 필요 시 설정 가능

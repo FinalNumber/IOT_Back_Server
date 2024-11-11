@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<app_user, String> {
     @Query("SELECT u FROM app_user u WHERE u.refresh_token = :refreshToken")
     Optional<app_user> findByRefreshToken(@Param("refreshToken") String refreshToken);
     List<app_user> findByName(String name);
+
+    Optional<app_user> findByUserid(String volunteerid);
 }
