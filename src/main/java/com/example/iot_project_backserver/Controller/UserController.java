@@ -1,7 +1,10 @@
 package com.example.iot_project_backserver.Controller;
 
+import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 import com.example.iot_project_backserver.Entity.User.app_user;
 import com.example.iot_project_backserver.Entity.Volunteer.volunteer;
+import com.example.iot_project_backserver.Repository.Volunteer.VolunteerRepository;
+import com.example.iot_project_backserver.Service.MedicalService;
 import com.example.iot_project_backserver.Service.UserService;
 import com.example.iot_project_backserver.Service.VolunteerService;
 import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
@@ -35,6 +38,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private MedicalService medicalService;
     // 이메일 중복 체크
     @PostMapping("/idcheck")
     public ResponseEntity<Map<String, String>> idcheck(@RequestParam("email") String email) {
@@ -141,8 +146,24 @@ public class UserController {
 
     @PostMapping("/medicalname")
     public ResponseEntity<Map<String, String>> medicalname(@RequestParam("userid") String userid) {
+        // patient_assignment 테이블에서 userid에 해당하는 레코드를 조회
+        Optional<patient_assignment> assignment = medicalService.findByUserid(userid);
 
-        return null;
+        if (assignment.isPresent()) {
+            // medicalid를 사용하여 app_user 테이블에서 의료 정보 조회
+            Optional<app_user> medicalUser = userService.findUserByUserid(assignment.get().getMedicalid());
+
+            if (medicalUser.isPresent()) {
+                Map<String, String> response = new HashMap<>();
+                response.put("userid", medicalUser.get().getUserid());
+                response.put("name", medicalUser.get().getName());
+                // 필요한 다른 정보도 추가 가능
+
+                return ResponseEntity.ok(response);
+            }
+        }
+        // 조회된 레코드가 없거나 유저 정보가 없는 경우, 에러 메시지 응답
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
     }
 
     @PostMapping("/tokencheck")

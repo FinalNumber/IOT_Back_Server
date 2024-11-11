@@ -25,4 +25,6 @@ public interface UserService {
     List<Map<String, String>> getUserInfoByName(String name);
 
     Optional<Map<String, String>> getUserInfoByUserid(String userid);
+
+    Optional<app_user> findUserByUserid(String userid);
 }

@@ -84,4 +84,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userid)
                 .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()));
     }
+    @Override
+    public Optional<app_user> findUserByUserid(String userid) {
+        return userRepository.findByUserid(userid);
+    }
 }

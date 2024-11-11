@@ -14,10 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @IdClass(PatientAssignmentId.class)
 public class patient_assignment {
-
     @Id
     private String medicalid;
-
     @Id
     private String userid;
 
@@ -26,6 +24,6 @@ public class patient_assignment {
     private com.example.iot_project_backserver.Entity.User.app_user medicalUser;
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
-    private com.example.iot_project_backserver.Entity.User.app_user assignedUser;
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
+    private com.example.iot_project_backserver.Entity.User.app_user app_user;
 }

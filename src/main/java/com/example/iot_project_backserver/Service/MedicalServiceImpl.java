@@ -89,4 +89,8 @@ public class MedicalServiceImpl implements MedicalService {
         }
         return false;
     }
+    @Override
+    public Optional<patient_assignment> findByUserid(String userid) {
+        return patientAssignmentRepository.findByUserid(userid);
+    }
 }

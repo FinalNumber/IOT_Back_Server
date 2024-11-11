@@ -15,4 +15,6 @@ public interface PatientAssignmentRepository extends JpaRepository<patient_assig
     void deleteByMedicalidAndUserid(String medicalid, String userid);
 
     patient_assignment findByMedicalidAndUserid(String medicalid, String userid);
+
+    Optional<patient_assignment> findByUserid(String userid);
 }

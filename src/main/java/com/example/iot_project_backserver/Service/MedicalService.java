@@ -4,6 +4,7 @@ import com.example.iot_project_backserver.Entity.User.required_measurements;
 import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MedicalService {
     // LoadMeasureService의 메서드
@@ -15,4 +16,5 @@ public interface MedicalService {
     patient_assignment saveAssignment(String medicalid, String userid);
     List<patient_assignment> findAssignmentsByMedicalid(String medicalid);
     boolean deletePatientAssignment(String medicalid, String userid);
+    Optional<patient_assignment> findByUserid(String userid);
 }
