@@ -4,7 +4,7 @@ import com.example.iot_project_backserver.Entity.User.app_user;
 import com.example.iot_project_backserver.Entity.Volunteer.volunteer;
 import com.example.iot_project_backserver.Service.UserService;
 import com.example.iot_project_backserver.Service.VolunteerService;
-import com.example.iot_project_backserver.Config.Jwt.TokenProvider;
+import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
 import com.example.iot_project_backserver.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

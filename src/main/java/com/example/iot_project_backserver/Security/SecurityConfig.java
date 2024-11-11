@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver;
+package com.example.iot_project_backserver.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.Config.Jwt;
+package com.example.iot_project_backserver.Security.Config.Jwt;
 
 import lombok.Getter;
 import lombok.Setter;

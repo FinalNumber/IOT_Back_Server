@@ -1,6 +1,6 @@
-package com.example.iot_project_backserver.Config;
+package com.example.iot_project_backserver.Security.Config;
 
-import com.example.iot_project_backserver.Config.Jwt.TokenProvider;
+import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

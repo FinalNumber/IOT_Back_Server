@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.Config.Jwt;
+package com.example.iot_project_backserver.Security.Config.Jwt;
 
 import com.example.iot_project_backserver.Entity.User.app_user;
 import io.jsonwebtoken.*;
