@@ -138,6 +138,13 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/medicalname")
+    public ResponseEntity<Map<String, String>> medicalname(@RequestParam("userid") String userid) {
+
+        return null;
+    }
+
     @PostMapping("/tokencheck")
     public ResponseEntity<Map<String, String>> tokencheck(@RequestParam("userid") String userid, @RequestParam("refreshToken") String refreshToken) {
 
