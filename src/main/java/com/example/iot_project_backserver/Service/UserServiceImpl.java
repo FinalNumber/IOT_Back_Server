@@ -86,6 +86,6 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public Optional<app_user> findUserByUserid(String userid) {
-        return userRepository.findByUserid(userid);
+        return Optional.ofNullable(userRepository.findByUserid(userid).orElse(null));
     }
 }
