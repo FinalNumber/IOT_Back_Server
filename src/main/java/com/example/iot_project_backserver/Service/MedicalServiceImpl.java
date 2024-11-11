@@ -4,6 +4,7 @@ import com.example.iot_project_backserver.Entity.User.required_measurements;
 import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 import com.example.iot_project_backserver.Repository.Medical.RequiredMeasurementsRepository;
 import com.example.iot_project_backserver.Repository.Medical.PatientAssignmentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,11 +77,14 @@ public class MedicalServiceImpl implements MedicalService {
         return patientAssignmentRepository.findByMedicalid(medicalid);
     }
 
+    @Transactional
     @Override
     public boolean deletePatientAssignment(String medicalid, String userid) {
         patient_assignment assignment = patientAssignmentRepository.findByMedicalidAndUserid(medicalid, userid);
         if (assignment != null) {
             patientAssignmentRepository.delete(assignment);
+            // required_measurements 테이블에서 일치하는 userid의 레코드 삭제
+            requiredMeasurementsRepository.deleteByUserid(userid);
             return true;
         }
         return false;

@@ -125,7 +125,6 @@ public class MedicalController {
         Map<String, Object> response = new HashMap<>();
         boolean isDeleted = medicalService.deletePatientAssignment(medicalid, userid);
         response.put("success", isDeleted);
-        response.put("message", isDeleted ? "Record deleted successfully." : "Record not found.");
         return ResponseEntity.ok(response);
     }
 
