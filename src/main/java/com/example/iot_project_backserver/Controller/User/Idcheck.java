@@ -1,6 +1,6 @@
 package com.example.iot_project_backserver.Controller.User;
 
-import com.example.iot_project_backserver.repository.User.UserRepository;
+import com.example.iot_project_backserver.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

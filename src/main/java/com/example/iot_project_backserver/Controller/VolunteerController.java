@@ -1,12 +1,13 @@
 package com.example.iot_project_backserver.Controller;
 
-import com.example.iot_project_backserver.dto.CombinedVolunteerData;
-import com.example.iot_project_backserver.dto.PatientVolunteerData;
-import com.example.iot_project_backserver.entity.Volunteer.desired_volunteer_date;
-import com.example.iot_project_backserver.entity.Volunteer.volunteer_assignment;
-import com.example.iot_project_backserver.service.Volunteer.DesiredService;
-import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
-import com.example.iot_project_backserver.service.Volunteer.VolunteerService;
+import com.example.iot_project_backserver.Dto.CombinedVolunteerData;
+import com.example.iot_project_backserver.Dto.PatientVolunteerData;
+import com.example.iot_project_backserver.Entity.Volunteer.desired_volunteer_date;
+import com.example.iot_project_backserver.Entity.Volunteer.volunteer_assignment;
+//import com.example.iot_project_backserver.service.Volunteer.DesiredService;
+//import com.example.iot_project_backserver.service.Volunteer.VolunteerAssignmentService;
+import com.example.iot_project_backserver.Service.VolunteerService;
+//import com.example.iot_project_backserver.service.VolunteerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 public class VolunteerController {
-    private final DesiredService desiredService;
-    private final VolunteerAssignmentService volunteerAssignmentService;
     private final VolunteerService volunteerService;
 
 
@@ -32,7 +31,7 @@ public class VolunteerController {
                                                        @RequestParam("desireddate") String desireddate,
                                                        @RequestParam("text") String text) {
 
-        desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, desireddate, text);
+        desired_volunteer_date savedEntity = volunteerService.saveDesiredVolunteerDate(userid, desireddate, text);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -43,8 +42,8 @@ public class VolunteerController {
 
     @PostMapping("/allvolunteercall") //봉사자가 예약list, 출장list 요청
     public ResponseEntity<CombinedVolunteerData> allvolunteercall(@RequestParam("userid") String volunteerid) {
-        List<desired_volunteer_date> desiredVolunteerDates = desiredService.getAllDesiredVolunteerDates();
-        List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByVolunteerid(volunteerid);
+        List<desired_volunteer_date> desiredVolunteerDates = volunteerService.getAllDesiredVolunteerDates();
+        List<volunteer_assignment> volunteerAssignments = volunteerService.getVolunteerAssignmentsByVolunteerid(volunteerid);
 
 
         CombinedVolunteerData combinedData = new CombinedVolunteerData(desiredVolunteerDates, volunteerAssignments);
@@ -53,8 +52,8 @@ public class VolunteerController {
 
     @PostMapping("/patientvolunteercall") //사용자가 예약list, 출장list 요청
     public ResponseEntity<PatientVolunteerData> patientvolunteercall(@RequestParam("userid") String userid) {
-        List<desired_volunteer_date> desiredVolunteerDates = desiredService.getDesiredVolunteerDatesByUserid(userid);
-        List<volunteer_assignment> volunteerAssignments = volunteerAssignmentService.getVolunteerAssignmentsByUserid(userid);
+        List<desired_volunteer_date> desiredVolunteerDates = volunteerService.getDesiredVolunteerDatesByUserid(userid);
+        List<volunteer_assignment> volunteerAssignments = volunteerService.getVolunteerAssignmentsByUserid(userid);
 
         PatientVolunteerData responseData = new PatientVolunteerData(desiredVolunteerDates, volunteerAssignments);
         return ResponseEntity.ok(responseData);
@@ -66,9 +65,9 @@ public class VolunteerController {
             @RequestParam("userid") String userid,
             @RequestParam("assignmentdate") String assignmentdate, @RequestParam("text") String text) {
 
-        volunteer_assignment savedAssignment = volunteerAssignmentService.saveVolunteerAssignment(volunteerid, userid, assignmentdate, text);
+        volunteer_assignment savedAssignment = volunteerService.saveVolunteerAssignment(volunteerid, userid, assignmentdate, text);
 
-        desiredService.deleteDesiredVolunteerDateByUseridAndDate(userid, assignmentdate);
+        volunteerService.deleteDesiredVolunteerDateByUseridAndDate(userid, assignmentdate);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -95,7 +94,7 @@ public class VolunteerController {
             @RequestParam("userid") String userid,
             @RequestParam("assignmentdate") String assignmentdate) {
 
-        volunteerAssignmentService.deleteAssignment(volunteerid, userid, assignmentdate);
+        volunteerService.deleteAssignment(volunteerid, userid, assignmentdate);
 
         // volunteer 테이블에서 volunteer_time 증가
         volunteerService.incrementVolunteertime(volunteerid);
@@ -109,8 +108,8 @@ public class VolunteerController {
     @PostMapping("/assignmentcancel") //환자나 봉사자가 출장list 취소
     public ResponseEntity<Map<String, Object>> assignmentcancel(@RequestParam("volunteerid") String volunteerid,
                                                                 @RequestParam("userid") String userid, @RequestParam("assignmentdate") String assignmentdate, @RequestParam("text") String text) {
-        desired_volunteer_date savedEntity = desiredService.saveDesiredVolunteerDate(userid, assignmentdate, text);
-        volunteerAssignmentService.deleteAssignment(volunteerid, userid, assignmentdate);
+        desired_volunteer_date savedEntity = volunteerService.saveDesiredVolunteerDate(userid, assignmentdate, text);
+        volunteerService.deleteAssignment(volunteerid, userid, assignmentdate);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
@@ -124,7 +123,7 @@ public class VolunteerController {
                                                                    @RequestParam("desireddate") String desireddate,
                                                                    @RequestParam("text") String text) {
 
-        boolean isUpdated = desiredService.updateDesiredVolunteerDate(userid, desireddate, text);
+        boolean isUpdated = volunteerService.updateDesiredVolunteerDate(userid, desireddate, text);
 
         Map<String, Object> response = new HashMap<>();
         if (isUpdated) {
@@ -142,7 +141,7 @@ public class VolunteerController {
     public ResponseEntity<Map<String, Object>> callvolunteermodify(@RequestParam("userid") String userid,
                                                                    @RequestParam("desireddate") String desireddate) {
 
-        desiredService.deleteDesiredVolunteerDateByUseridAndDate(userid, desireddate);
+        volunteerService.deleteDesiredVolunteerDateByUseridAndDate(userid, desireddate);
 
         return null;
     }

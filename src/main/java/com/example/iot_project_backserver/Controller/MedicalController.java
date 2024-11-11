@@ -1,10 +1,11 @@
 package com.example.iot_project_backserver.Controller;
 
-import com.example.iot_project_backserver.entity.Medical.patient_assignment;
-import com.example.iot_project_backserver.entity.User.required_measurements;
-import com.example.iot_project_backserver.service.Medical.LoadMeasureService;
-import com.example.iot_project_backserver.service.Medical.PatientAssignmentService;
-import com.example.iot_project_backserver.service.User.UserService;
+import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
+import com.example.iot_project_backserver.Entity.User.required_measurements;
+//import com.example.iot_project_backserver.service.Medical.LoadMeasureService;
+import com.example.iot_project_backserver.Service.MedicalService;
+//import com.example.iot_project_backserver.service.Medical.PatientAssignmentService;
+import com.example.iot_project_backserver.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +21,7 @@ public class MedicalController {
     @Autowired
     private UserService userService;
     @Autowired
-    private PatientAssignmentService patientAssignmentService;
-    @Autowired
-    private LoadMeasureService loadMeasureService;
+    private MedicalService medicalService;
 
     @PostMapping("/searchpatient")//의료진이 환자를 추가하기 위해 검색
     public ResponseEntity<Map<String, Object>> searchpatient(@RequestParam("searchdata") String searchdata) {
@@ -73,13 +72,13 @@ public class MedicalController {
         Map<String, Object> response = new HashMap<>();
 
         // 서비스에서 레코드 존재 여부 확인
-        boolean exists = patientAssignmentService.checkAssignmentExists(medicalid, userid);
+        boolean exists = medicalService.checkAssignmentExists(medicalid, userid);
         if (exists) {
             // 이미 존재하는 경우
             response.put("status", "duplication");
         } else {
             // 존재하지 않는 경우 서비스에서 새로운 레코드 저장
-            patientAssignmentService.saveAssignment(medicalid, userid);
+            medicalService.saveAssignment(medicalid, userid);
             response.put("status", "success");
         }
 
@@ -88,7 +87,7 @@ public class MedicalController {
 
     @PostMapping("/loadpatient")//의료진이 담당 환자 list 받기
     public ResponseEntity<Map<String, Object>> loadpatient(@RequestParam("medicalid") String medicalid) {
-        List<patient_assignment> assignments = patientAssignmentService.findAssignmentsByMedicalid(medicalid);
+        List<patient_assignment> assignments = medicalService.findAssignmentsByMedicalid(medicalid);
 
         Map<String, Object> response = new HashMap<>();
         if (!assignments.isEmpty()) {
@@ -124,7 +123,7 @@ public class MedicalController {
     @PostMapping("/deletepatient")//의료진이 담당 환자 list 삭제
     public ResponseEntity<Map<String, Object>> deletepatient(@RequestParam("medicalid") String medicalid, @RequestParam("userid") String userid) {
         Map<String, Object> response = new HashMap<>();
-        boolean isDeleted = patientAssignmentService.deletePatientAssignment(medicalid, userid);
+        boolean isDeleted = medicalService.deletePatientAssignment(medicalid, userid);
         response.put("success", isDeleted);
         response.put("message", isDeleted ? "Record deleted successfully." : "Record not found.");
         return ResponseEntity.ok(response);
@@ -132,7 +131,7 @@ public class MedicalController {
 
     @PostMapping("/loadmeasure")//담당 환자의 필요 측정 요소 list를 불러오기
     public ResponseEntity<Map<String, Object>> loadmeasure(@RequestParam("userid") String userid) {
-        required_measurements result = loadMeasureService.checkAndInsert(userid);
+        required_measurements result = medicalService.checkAndInsert(userid);
 
         Map<String, Object> response = new HashMap<>();
         response.put("userid", result.getUserid());
@@ -150,7 +149,7 @@ public class MedicalController {
     @PostMapping("/modifymeasure")//담당 환자의 필요 측정 요소 list를 수정하기
     public ResponseEntity<Map<String, Object>> modifymeasure(@RequestParam("userid") String userid, @RequestParam("airflow") Boolean airflow, @RequestParam("bodytemp") Boolean bodytemp, @RequestParam("nibp") Boolean nibp, @RequestParam("spo2") Boolean spo2, @RequestParam("ecg") Boolean ecg, @RequestParam("emg") Boolean emg, @RequestParam("gsr") Boolean gsr) {
 
-        required_measurements updatedMeasurements = loadMeasureService.updateMeasurements(userid, airflow, bodytemp, nibp, spo2, ecg, emg, gsr);
+        required_measurements updatedMeasurements = medicalService.updateMeasurements(userid, airflow, bodytemp, nibp, spo2, ecg, emg, gsr);
 
         Map<String, Object> response = new HashMap<>();
         if (updatedMeasurements != null) {
