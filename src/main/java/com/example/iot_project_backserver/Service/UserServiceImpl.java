@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
     public List<Map<String, String>> getUserInfoByName(String name) {
         return userRepository.findByName(name)
                 .stream()
+                .filter(user -> "Patient".equals(user.getDivision()))  // division이 "Patient"인 데이터만 필터링
                 .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()))
                 .toList();
     }
@@ -82,6 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<Map<String, String>> getUserInfoByUserid(String userid) {
         return userRepository.findById(userid)
+                .filter(user -> "Patient".equals(user.getDivision()))  // division이 "Patient"인 경우에만 반환
                 .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()));
     }
     @Override
