@@ -1,16 +1,24 @@
 package com.example.iot_project_backserver.Security;
 
+import com.example.iot_project_backserver.Security.Config.TokenAuthenticationFilter;
+import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final TokenProvider tokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -20,31 +28,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()  // 필요시 CSRF 보호를 비활성화
+                .csrf().disable()  // 필요시 CSRF 보호 비활성화
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용하지 않음
+                .and()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/idcheck").permitAll()  // `/idcheck` 엔드포인트는 인증 없이 접근 가능
-                        .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/callvolunteer").permitAll()
-                        .requestMatchers("/allvolunteercall").permitAll()
-                        .requestMatchers("/patientvolunteercall").permitAll()
-                        .requestMatchers("/volunteerassignment").permitAll()
-                        .requestMatchers("/volunteercomplete").permitAll()
-                        .requestMatchers("/assignmentcancel").permitAll()
-                        .requestMatchers("/volunteercallmodify").permitAll()
-                        .requestMatchers("/volunteercalldelete").permitAll()
-                        .requestMatchers("/searchpatient").permitAll()
-                        .requestMatchers("/assignmentpatient").permitAll()
-                        .requestMatchers("/loadpatient").permitAll()
-                        .requestMatchers("/deletepatient").permitAll()
-                        .requestMatchers("/loadmeasure").permitAll()
-                        .requestMatchers("/modifymeasure").permitAll()
-                        .requestMatchers("/volunteertime").permitAll()
-                        .requestMatchers("/tokencheck").permitAll()
-                        .requestMatchers("/medicalname").permitAll()
+                        .requestMatchers("/idcheck", "/signup", "/login").permitAll()  // 인증 없이 접근 가능한 엔드포인트
                         .anyRequest().authenticated()  // 그 외의 요청은 인증 필요
                 )
-                .formLogin().disable();  // 로그인 폼을 비활성화, 필요 시 설정 가능
+                .addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class) // 필터 추가
+                .formLogin().disable();  // 로그인 폼 비활성화
 
         return http.build();
     }

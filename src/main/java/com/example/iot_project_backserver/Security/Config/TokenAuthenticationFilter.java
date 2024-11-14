@@ -28,6 +28,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 가져온 값에서 접두사 제거
         String token = getAccessToken(authorizationHeader);
 
+
         // 가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
         if (token != null && tokenProvider.validateToken(token)) { // null 체크 추가
             Authentication authentication = tokenProvider.getAuthentication(token);

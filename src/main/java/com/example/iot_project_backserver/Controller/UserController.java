@@ -63,6 +63,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestParam("email") String email,
                                                      @RequestParam("password") String password) {
+
         Map<String, Object> response = new HashMap<>();
         Optional<app_user> userOptional = userService.getUserById(email);
 
@@ -146,6 +147,7 @@ public class UserController {
 
     @PostMapping("/medicalname")
     public ResponseEntity<Map<String, String>> medicalname(@RequestParam("userid") String userid) {
+
         // patient_assignment 테이블에서 userid에 해당하는 레코드를 조회
         Optional<patient_assignment> assignment = medicalService.findByUserid(userid);
         Map<String, String> response = new HashMap<>();
