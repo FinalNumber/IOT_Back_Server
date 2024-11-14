@@ -1,6 +1,7 @@
 package com.example.iot_project_backserver.Service;
 
 import com.example.iot_project_backserver.Entity.User.app_user;
+import com.example.iot_project_backserver.Repository.Medical.PatientAssignmentRepository;
 import com.example.iot_project_backserver.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PatientAssignmentRepository patientAssignmentRepository;
 
     @Override
     public List<app_user> getAllUsers() {
@@ -73,17 +76,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Map<String, String>> getUserInfoByName(String name) {
+        List<String> assignedUserIds = patientAssignmentRepository.findAllAssignedUserIds();
         return userRepository.findByName(name)
                 .stream()
-                .filter(user -> "Patient".equals(user.getDivision()))  // division이 "Patient"인 데이터만 필터링
+                .filter(user -> "Patient".equals(user.getDivision()))
+                .filter(user -> !assignedUserIds.contains(user.getUserid())) // assignedUserIds에 포함되지 않은 userid만 반환
                 .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()))
                 .toList();
     }
 
     @Override
     public Optional<Map<String, String>> getUserInfoByUserid(String userid) {
+        List<String> assignedUserIds = patientAssignmentRepository.findAllAssignedUserIds();
         return userRepository.findById(userid)
-                .filter(user -> "Patient".equals(user.getDivision()))  // division이 "Patient"인 경우에만 반환
+                .filter(user -> "Patient".equals(user.getDivision()))
+                .filter(user -> !assignedUserIds.contains(user.getUserid())) // assignedUserIds에 포함되지 않은 userid만 반환
                 .map(user -> Map.of("userid", user.getUserid(), "name", user.getName()));
     }
     @Override
