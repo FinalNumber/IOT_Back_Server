@@ -59,10 +59,11 @@ public class UserController {
         }
     }
 
-    // 로그인 처리
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestParam("email") String email,
-                                                     @RequestParam("password") String password) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginRequest) {
+
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
 
         Map<String, Object> response = new HashMap<>();
         Optional<app_user> userOptional = userService.getUserById(email);
@@ -97,6 +98,7 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
+
 
     // 회원가입 처리
     @PostMapping("/signup")
@@ -146,7 +148,8 @@ public class UserController {
     }
 
     @PostMapping("/medicalname")
-    public ResponseEntity<Map<String, String>> medicalname(@RequestParam("userid") String userid) {
+    public ResponseEntity<Map<String, String>> medicalname(@RequestBody Map<String, String> requestData) {
+        String userid = requestData.get("userid");
 
         // patient_assignment 테이블에서 userid에 해당하는 레코드를 조회
         Optional<patient_assignment> assignment = medicalService.findByUserid(userid);
@@ -155,7 +158,7 @@ public class UserController {
             // medicalid를 사용하여 app_user 테이블에서 의료 정보 조회
             Optional<app_user> medicalUser = userService.findUserByUserid(assignment.get().getMedicalid());
 
-            if (medicalUser != null) {
+            if (medicalUser.isPresent()) {
                 response.put("userid", medicalUser.get().getUserid());
                 response.put("name", medicalUser.get().getName());
                 // 필요한 다른 정보도 추가 가능
@@ -165,14 +168,18 @@ public class UserController {
                 response.put("status", "null");
                 return ResponseEntity.ok(response);
             }
-        }else{
+        } else {
             response.put("status", "null");
             return ResponseEntity.ok(response);
         }
     }
 
+
+
     @PostMapping("/tokencheck")
-    public ResponseEntity<Map<String, String>> tokencheck(@RequestParam("userid") String userid, @RequestParam("refreshToken") String refreshToken) {
+    public ResponseEntity<Map<String, String>> tokencheck(@RequestBody Map<String, String> requestData) {
+        String userid = requestData.get("userid");
+        String refreshToken = requestData.get("refreshToken");
 
         // 리프레시 토큰 검증
         boolean isTokenValid = volunteerService.validateRefreshToken(userid, refreshToken);
@@ -182,10 +189,12 @@ public class UserController {
         if (!isTokenValid) {
             response.put("status", "TokenInvalid");
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }else{
+        } else {
             response.put("status", "success");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
+
+
 
 }

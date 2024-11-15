@@ -14,17 +14,26 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Service
 public class TokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    // SecretKey 생성 메서드
+    public TokenProvider(JwtProperties jwtProperties) {
+        this.jwtProperties = jwtProperties;
+        System.out.println("TokenProvider instantiated with JWT Properties.");
+    }
+
     private Key getSigningKey() {
         byte[] keyBytes = Base64.getDecoder().decode(jwtProperties.getSecretKey());
+        System.out.println("Decoded key length: " + keyBytes.length); // 디버그 출력
+        if (keyBytes.length < 32) {
+            throw new IllegalArgumentException("The JWT secret key must be at least 256 bits (32 bytes) long.");
+        }
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
 
     // JWT 억세스 토큰 생성 메서드
     public String generateAccessToken(app_user user) {
@@ -54,18 +63,38 @@ public class TokenProvider {
 
     // JWT 토큰 유효성 검증 메서드
     public boolean validateToken(String token) {
+        System.out.println("Validating JWT Token...");
+        System.out.println("Received Token: " + token);
 
         try {
+            // 디버깅: 토큰 복호화 과정 시작
+            System.out.println("Starting token parsing...");
+
             Jwts.parserBuilder()
                     .setSigningKey(getSigningKey()) // SecretKey로 복호화
                     .build()
                     .parseClaimsJws(token);
+
+            // 디버깅: 토큰이 성공적으로 복호화됨
+            System.out.println("Token is valid.");
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            // 복호화 과정에서 에러가 나면 유효하지 않은 토큰
-            return false;
+        } catch (JwtException e) {
+            // 디버깅: JWTException 발생 시 로그 출력
+            System.out.println("JWTException occurred: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            // 디버깅: IllegalArgumentException 발생 시 로그 출력
+            System.out.println("IllegalArgumentException occurred: " + e.getMessage());
+        } catch (Exception e) {
+            // 디버깅: 예상치 못한 예외 처리
+            System.out.println("Unexpected error during token validation: " + e.getMessage());
         }
+
+        // 디버깅: 토큰이 유효하지 않은 경우
+        System.out.println("Token is invalid.");
+        return false;
     }
+
+
 
     // 토큰 기반으로 인증 정보를 가져오는 메서드
     public Authentication getAuthentication(String token) {

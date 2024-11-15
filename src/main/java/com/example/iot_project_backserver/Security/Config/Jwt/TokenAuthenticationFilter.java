@@ -1,6 +1,5 @@
-package com.example.iot_project_backserver.Security.Config;
+package com.example.iot_project_backserver.Security.Config.Jwt;
 
-import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,17 +21,28 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // 요청 헤더에서 Authorization 키의 값 조회
+
+        // 모든 헤더를 출력
+        System.out.println("전체 요청 헤더:");
+        request.getHeaderNames().asIterator().forEachRemaining(headerName ->
+                System.out.println(headerName + ": " + request.getHeader(headerName))
+        );
+
+        // Authorization 헤더의 값 조회
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
+        System.out.println("Authorization 헤더: " + authorizationHeader);
 
         // 가져온 값에서 접두사 제거
         String token = getAccessToken(authorizationHeader);
+        System.out.println("추출된 토큰: " + token);
 
-
-        // 가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
-        if (token != null && tokenProvider.validateToken(token)) { // null 체크 추가
+        // 토큰 유효성 검증
+        if (token != null && tokenProvider.validateToken(token)) {
+            System.out.println("토큰이 유효합니다. SecurityContext에 인증 정보 설정 중...");
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            System.out.println("토큰이 유효하지 않거나 존재하지 않습니다.");
         }
 
         filterChain.doFilter(request, response);
