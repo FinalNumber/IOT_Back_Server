@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface MedicalService {
     // LoadMeasureService의 메서드
     required_measurements checkAndInsert(String userid);
-    required_measurements updateMeasurements(String userid, boolean airflow, boolean bodytemp, boolean nibp, boolean spo2, boolean ecg, boolean emg, boolean gsr);
+    required_measurements updateMeasurements(String userid, String airflow, String bodytemp, String nibp, String spo2, String ecg, String emg, String gsr);
 
     // PatientAssignmentService의 메서드
     boolean checkAssignmentExists(String medicalid, String userid);

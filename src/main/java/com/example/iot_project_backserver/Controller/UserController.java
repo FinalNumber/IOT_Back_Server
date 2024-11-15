@@ -3,18 +3,18 @@ package com.example.iot_project_backserver.Controller;
 import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 import com.example.iot_project_backserver.Entity.User.app_user;
 import com.example.iot_project_backserver.Entity.Volunteer.volunteer;
-import com.example.iot_project_backserver.Repository.Volunteer.VolunteerRepository;
+import com.example.iot_project_backserver.Repository.User.UserRepository;
+import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
 import com.example.iot_project_backserver.Service.MedicalService;
 import com.example.iot_project_backserver.Service.UserService;
 import com.example.iot_project_backserver.Service.VolunteerService;
-import com.example.iot_project_backserver.Security.Config.Jwt.TokenProvider;
-import com.example.iot_project_backserver.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +40,11 @@ public class UserController {
 
     @Autowired
     private MedicalService medicalService;
+
     // 이메일 중복 체크
     @PostMapping("/idcheck")
-    public ResponseEntity<Map<String, String>> idcheck(@RequestParam("email") String email) {
+    public ResponseEntity<Map<String, String>> idcheck(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
         Map<String, String> response = new HashMap<>();
         System.out.println("Received email ID: " + email);
         String userid = email;
@@ -99,17 +101,16 @@ public class UserController {
         }
     }
 
-
     // 회원가입 처리
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, String>> createNewUser(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam("username") String username,
-            @RequestParam("birth") String birth,
-            @RequestParam("phoneNum") String phoneNum,
-            @RequestParam("role") String role,
-            @RequestParam(value = "userImage", required = false) MultipartFile userImage) {
+    public ResponseEntity<Map<String, String>> createNewUser(@RequestBody Map<String, String> requestData) {
+
+        String email = requestData.get("email");
+        String password = requestData.get("password");
+        String username = requestData.get("username");
+        String birth = requestData.get("birth");
+        String phoneNum = requestData.get("phoneNum");
+        String role = requestData.get("role");
 
         Map<String, String> response = new HashMap<>();
         String userid = email;
@@ -174,8 +175,6 @@ public class UserController {
         }
     }
 
-
-
     @PostMapping("/tokencheck")
     public ResponseEntity<Map<String, String>> tokencheck(@RequestBody Map<String, String> requestData) {
         String userid = requestData.get("userid");
@@ -194,7 +193,4 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
-
-
-
 }

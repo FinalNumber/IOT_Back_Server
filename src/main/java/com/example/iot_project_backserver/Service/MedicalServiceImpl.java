@@ -41,17 +41,17 @@ public class MedicalServiceImpl implements MedicalService {
     }
 
     @Override
-    public required_measurements updateMeasurements(String userid, boolean airflow, boolean bodytemp, boolean nibp, boolean spo2, boolean ecg, boolean emg, boolean gsr) {
+    public required_measurements updateMeasurements(String userid, String airflow, String bodytemp, String nibp, String spo2, String ecg, String emg, String gsr) {
         Optional<required_measurements> existingRecord = requiredMeasurementsRepository.findById(userid);
         if (existingRecord.isPresent()) {
             required_measurements measurements = existingRecord.get();
-            measurements.setAirflow(airflow);
+            /*measurements.setAirflow(airflow);
             measurements.setBodytemp(bodytemp);
             measurements.setNibp(nibp);
             measurements.setSpo2(spo2);
             measurements.setEcg(ecg);
             measurements.setEmg(emg);
-            measurements.setGsr(gsr);
+            measurements.setGsr(gsr);*/
             return requiredMeasurementsRepository.save(measurements);
         }
         return null;

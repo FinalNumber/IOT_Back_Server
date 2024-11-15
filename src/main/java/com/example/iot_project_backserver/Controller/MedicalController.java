@@ -2,14 +2,12 @@ package com.example.iot_project_backserver.Controller;
 
 import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 import com.example.iot_project_backserver.Entity.User.required_measurements;
-//import com.example.iot_project_backserver.service.Medical.LoadMeasureService;
 import com.example.iot_project_backserver.Service.MedicalService;
-//import com.example.iot_project_backserver.service.Medical.PatientAssignmentService;
 import com.example.iot_project_backserver.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -23,11 +21,12 @@ public class MedicalController {
     @Autowired
     private MedicalService medicalService;
 
-    @PostMapping("/searchpatient")//의료진이 환자를 추가하기 위해 검색
-    public ResponseEntity<Map<String, Object>> searchpatient(@RequestParam("searchdata") String searchdata) {
+    @PostMapping("/searchpatient") // 의료진이 환자를 추가하기 위해 검색
+    public ResponseEntity<Map<String, Object>> searchpatient(@RequestBody Map<String, String> requestData) {
+        String searchdata = requestData.get("searchdata");
         Map<String, Object> response = new HashMap<>();
 
-        if(searchdata.contains("@")){
+        if (searchdata.contains("@")) {
             // searchdata를 userid로 간주하고 조회
             Optional<Map<String, String>> userInfo = userService.getUserInfoByUserid(searchdata);
             if (userInfo.isPresent()) {
@@ -42,7 +41,7 @@ public class MedicalController {
                 response.put("name", null);
                 return ResponseEntity.ok(response);
             }
-        }else {
+        } else {
             List<Map<String, String>> userInfoList = userService.getUserInfoByName(searchdata);
 
             if (!userInfoList.isEmpty()) {
@@ -67,17 +66,16 @@ public class MedicalController {
         }
     }
 
-    @PostMapping("/assignmentpatient")//의료진이 담당환자 추가
-    public ResponseEntity<Map<String, Object>> assignmentpatient(@RequestParam("medicalid") String medicalid, @RequestParam("userid") String userid) {
+    @PostMapping("/assignmentpatient") // 의료진이 담당 환자 추가
+    public ResponseEntity<Map<String, Object>> assignmentpatient(@RequestBody Map<String, String> requestData) {
+        String medicalid = requestData.get("medicalid");
+        String userid = requestData.get("userid");
         Map<String, Object> response = new HashMap<>();
 
-        // 서비스에서 레코드 존재 여부 확인
         boolean exists = medicalService.checkAssignmentExists(medicalid, userid);
         if (exists) {
-            // 이미 존재하는 경우
             response.put("status", "duplication");
         } else {
-            // 존재하지 않는 경우 서비스에서 새로운 레코드 저장
             medicalService.saveAssignment(medicalid, userid);
             response.put("status", "success");
         }
@@ -85,8 +83,9 @@ public class MedicalController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/loadpatient")//의료진이 담당 환자 list 받기
-    public ResponseEntity<Map<String, Object>> loadpatient(@RequestParam("medicalid") String medicalid) {
+    @PostMapping("/loadpatient") // 의료진이 담당 환자 리스트 받기
+    public ResponseEntity<Map<String, Object>> loadpatient(@RequestBody Map<String, String> requestData) {
+        String medicalid = requestData.get("medicalid");
         List<patient_assignment> assignments = medicalService.findAssignmentsByMedicalid(medicalid);
 
         Map<String, Object> response = new HashMap<>();
@@ -98,13 +97,11 @@ public class MedicalController {
                 assignmentData.put("medicalid", assignment.getMedicalid());
                 assignmentData.put("userid", assignment.getUserid());
 
-                // app_user 정보 포함
                 if (assignment.getApp_user() != null) {
                     Map<String, Object> userData = new HashMap<>();
                     userData.put("userid", assignment.getApp_user().getUserid());
                     userData.put("name", assignment.getApp_user().getName());
                     userData.put("birth", assignment.getApp_user().getBirth());
-
                     assignmentData.put("app_user", userData);
                 } else {
                     assignmentData.put("app_user", null);
@@ -120,16 +117,19 @@ public class MedicalController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/deletepatient")//의료진이 담당 환자 list 삭제
-    public ResponseEntity<Map<String, Object>> deletepatient(@RequestParam("medicalid") String medicalid, @RequestParam("userid") String userid) {
+    @PostMapping("/deletepatient") // 의료진이 담당 환자 리스트 삭제
+    public ResponseEntity<Map<String, Object>> deletepatient(@RequestBody Map<String, String> requestData) {
+        String medicalid = requestData.get("medicalid");
+        String userid = requestData.get("userid");
         Map<String, Object> response = new HashMap<>();
         boolean isDeleted = medicalService.deletePatientAssignment(medicalid, userid);
         response.put("success", isDeleted);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/loadmeasure")//담당 환자의 필요 측정 요소 list를 불러오기
-    public ResponseEntity<Map<String, Object>> loadmeasure(@RequestParam("userid") String userid) {
+    @PostMapping("/loadmeasure") // 담당 환자의 필요 측정 요소 리스트를 불러오기
+    public ResponseEntity<Map<String, Object>> loadmeasure(@RequestBody Map<String, String> requestData) {
+        String userid = requestData.get("userid");
         required_measurements result = medicalService.checkAndInsert(userid);
 
         Map<String, Object> response = new HashMap<>();
@@ -145,8 +145,16 @@ public class MedicalController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/modifymeasure")//담당 환자의 필요 측정 요소 list를 수정하기
-    public ResponseEntity<Map<String, Object>> modifymeasure(@RequestParam("userid") String userid, @RequestParam("airflow") Boolean airflow, @RequestParam("bodytemp") Boolean bodytemp, @RequestParam("nibp") Boolean nibp, @RequestParam("spo2") Boolean spo2, @RequestParam("ecg") Boolean ecg, @RequestParam("emg") Boolean emg, @RequestParam("gsr") Boolean gsr) {
+    @PostMapping("/modifymeasure") // 담당 환자의 필요 측정 요소 리스트를 수정하기
+    public ResponseEntity<Map<String, Object>> modifymeasure(@RequestBody Map<String, Object> requestData) {
+        String userid = (String) requestData.get("userid");
+        String airflow = (String) requestData.get("airflow");
+        String bodytemp = (String) requestData.get("bodytemp");
+        String nibp = (String) requestData.get("nibp");
+        String spo2 = (String) requestData.get("spo2");
+        String ecg = (String) requestData.get("ecg");
+        String emg = (String) requestData.get("emg");
+        String gsr = (String) requestData.get("gsr");
 
         required_measurements updatedMeasurements = medicalService.updateMeasurements(userid, airflow, bodytemp, nibp, spo2, ecg, emg, gsr);
 
