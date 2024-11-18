@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 public class required_measurements {
     @Id
     private String userid;
-    private Boolean airflow;
-    private Boolean bodytemp;
-    private Boolean nibp;
-    private Boolean spo2;
-    private Boolean ecg;
-    private Boolean emg;
-    private Boolean gsr;
+    private String airflow;
+    private String bodytemp;
+    private String nibp;
+    private String spo2;
+    private String ecg;
+    private String emg;
+    private String gsr;
 
     @ManyToOne
     @JoinColumn(name = "userid", insertable = false, updatable = false)

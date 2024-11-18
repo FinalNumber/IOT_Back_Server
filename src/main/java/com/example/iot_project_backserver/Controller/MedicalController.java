@@ -146,15 +146,15 @@ public class MedicalController {
     }
 
     @PostMapping("/modifymeasure") // 담당 환자의 필요 측정 요소 리스트를 수정하기
-    public ResponseEntity<Map<String, Object>> modifymeasure(@RequestBody Map<String, Object> requestData) {
-        String userid = (String) requestData.get("userid");
-        String airflow = (String) requestData.get("airflow");
-        String bodytemp = (String) requestData.get("bodytemp");
-        String nibp = (String) requestData.get("nibp");
-        String spo2 = (String) requestData.get("spo2");
-        String ecg = (String) requestData.get("ecg");
-        String emg = (String) requestData.get("emg");
-        String gsr = (String) requestData.get("gsr");
+    public ResponseEntity<Map<String, Object>> modifymeasure(@RequestBody Map<String, String> requestData) {
+        String userid = requestData.get("userid");
+        String airflow = requestData.get("airflow");
+        String bodytemp = requestData.get("bodytemp");
+        String nibp = requestData.get("nibp");
+        String spo2 = requestData.get("spo2");
+        String ecg = requestData.get("ecg");
+        String emg = requestData.get("emg");
+        String gsr = requestData.get("gsr");
 
         required_measurements updatedMeasurements = medicalService.updateMeasurements(userid, airflow, bodytemp, nibp, spo2, ecg, emg, gsr);
 

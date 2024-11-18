@@ -27,13 +27,13 @@ public class MedicalServiceImpl implements MedicalService {
         if (existingRecord.isEmpty()) {
             required_measurements newRecord = required_measurements.builder()
                     .userid(userid)
-                    .airflow(false)
-                    .bodytemp(false)
-                    .nibp(false)
-                    .spo2(false)
-                    .ecg(false)
-                    .emg(false)
-                    .gsr(false)
+                    .airflow("false")
+                    .bodytemp("false")
+                    .nibp("false")
+                    .spo2("false")
+                    .ecg("false")
+                    .emg("false")
+                    .gsr("false")
                     .build();
             return requiredMeasurementsRepository.save(newRecord);
         }
@@ -45,13 +45,13 @@ public class MedicalServiceImpl implements MedicalService {
         Optional<required_measurements> existingRecord = requiredMeasurementsRepository.findById(userid);
         if (existingRecord.isPresent()) {
             required_measurements measurements = existingRecord.get();
-            /*measurements.setAirflow(airflow);
+            measurements.setAirflow(airflow);
             measurements.setBodytemp(bodytemp);
             measurements.setNibp(nibp);
             measurements.setSpo2(spo2);
             measurements.setEcg(ecg);
             measurements.setEmg(emg);
-            measurements.setGsr(gsr);*/
+            measurements.setGsr(gsr);
             return requiredMeasurementsRepository.save(measurements);
         }
         return null;
