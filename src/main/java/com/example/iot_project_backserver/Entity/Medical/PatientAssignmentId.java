@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.Dto;
+package com.example.iot_project_backserver.Entity.Medical;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
