@@ -124,13 +124,4 @@ public class VolunteerServiceImpl implements VolunteerService {
         Optional<volunteer> volunteerRecord = volunteerRepository.findById(volunteerid);
         return volunteerRecord.map(volunteer::getVolunteertime);
     }
-    @Override
-    public boolean validateRefreshToken(String volunteerid, String refreshToken) {
-        Optional<app_user> userOptional = userRepository.findByUserid(volunteerid);
-        if (userOptional.isPresent()) {
-            String storedRefreshToken = userOptional.get().getRefresh_token();
-            return storedRefreshToken != null && storedRefreshToken.equals(refreshToken);
-        }
-        return false;
-    }
 }

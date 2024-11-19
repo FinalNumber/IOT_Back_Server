@@ -21,5 +21,4 @@ public class app_user {
     private String birth;
     private String phone_num;
     private String division;
-    private String refresh_token;
 }

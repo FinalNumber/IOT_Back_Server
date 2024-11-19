@@ -13,8 +13,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<app_user, String> {
     // 추가적인 사용자 정의 메소드가 필요한 경우 여기서 선언할 수 있습니다.
     boolean existsByUserid(String userid);
-    @Query("SELECT u FROM app_user u WHERE u.refresh_token = :refreshToken")
-    Optional<app_user> findByRefreshToken(@Param("refreshToken") String refreshToken);
     List<app_user> findByName(String name);
 
     Optional<app_user> findByUserid(String volunteerid);

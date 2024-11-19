@@ -10,7 +10,6 @@ public interface UserService {
     List<app_user> getAllUsers();                    // 모든 유저 가져오기
 
     Optional<app_user> getUserById(String id);       // ID로 유저 가져오기
-    Optional<app_user> getRefresh_token(String Token);       // 토큰으로 유저 가져오기
 
     app_user createUser(app_user newUser);           // 새로운 유저 생성
 

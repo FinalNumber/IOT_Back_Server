@@ -26,5 +26,4 @@ public interface VolunteerService {
     void incrementVolunteertime(String volunteerid);
     Optional<Integer> getVolunteerTimeById(String volunteerid);
 
-    boolean validateRefreshToken(String userid, String refreshToken);
 }

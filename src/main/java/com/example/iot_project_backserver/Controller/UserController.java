@@ -76,7 +76,6 @@ public class UserController {
                 String accessToken = tokenProvider.generateAccessToken(user);
                 String refreshToken = tokenProvider.generateRefreshToken(user);
 
-                user.setRefresh_token(refreshToken);
                 userService.saveUser(user);
 
                 Map<String, String> responseData = new HashMap<>();
@@ -175,7 +174,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/tokencheck")
+    /*@PostMapping("/tokencheck")
     public ResponseEntity<Map<String, String>> tokencheck(@RequestBody Map<String, String> requestData) {
         String userid = requestData.get("userid");
         String refreshToken = requestData.get("refreshToken");
@@ -192,5 +191,5 @@ public class UserController {
             response.put("status", "success");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-    }
+    }*/
 }
