@@ -150,6 +150,14 @@ public class UserController {
     @PostMapping("/medicalname")
     public ResponseEntity<Map<String, String>> medicalname(@RequestBody Map<String, String> requestData) {
         String userid = requestData.get("userid");
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+
 
         // patient_assignment 테이블에서 userid에 해당하는 레코드를 조회
         Optional<patient_assignment> assignment = medicalService.findByUserid(userid);

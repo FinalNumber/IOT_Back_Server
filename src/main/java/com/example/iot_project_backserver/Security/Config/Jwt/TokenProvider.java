@@ -61,6 +61,28 @@ public class TokenProvider {
                 .compact();
     }
 
+
+    // 리프레시 토큰을 검증하고 새로운 억세스 토큰 발급
+    public String validateAndGenerateNewAccessToken(String refreshToken) {
+        System.out.println("Validating refresh token...");
+        // 리프레시 토큰 유효성 검증
+        if (!validateToken(refreshToken)) {
+            throw new JwtException("Invalid or expired refresh token");
+        }
+
+        // 리프레시 토큰에서 유저 ID 추출
+        String userId = getUserId(refreshToken);
+
+        // 유저 ID를 기반으로 새로운 억세스 토큰 생성
+        app_user user = new app_user();
+        user.setUserid(userId); // 유저 객체를 구성. 필요에 따라 DB에서 유저 정보를 가져올 수도 있음.
+
+        String newAccessToken = generateAccessToken(user);
+
+        System.out.println("New access token generated for user: " + userId);
+        return newAccessToken;
+    }
+
     // JWT 토큰 유효성 검증 메서드
     public boolean validateToken(String token) {
         System.out.println("Validating JWT Token...");

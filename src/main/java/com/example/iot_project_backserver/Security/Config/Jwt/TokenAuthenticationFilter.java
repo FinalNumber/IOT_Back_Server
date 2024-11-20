@@ -22,27 +22,22 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // 모든 헤더를 출력
-        System.out.println("전체 요청 헤더:");
-        request.getHeaderNames().asIterator().forEachRemaining(headerName ->
-                System.out.println(headerName + ": " + request.getHeader(headerName))
-        );
-
-        // Authorization 헤더의 값 조회
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
-        System.out.println("Authorization 헤더: " + authorizationHeader);
 
-        // 가져온 값에서 접두사 제거
         String token = getAccessToken(authorizationHeader);
-        System.out.println("추출된 토큰: " + token);
 
-        // 토큰 유효성 검증
-        if (token != null && tokenProvider.validateToken(token)) {
-            System.out.println("토큰이 유효합니다. SecurityContext에 인증 정보 설정 중...");
-            Authentication authentication = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            System.out.println("토큰이 유효하지 않거나 존재하지 않습니다.");
+        if (token != null) {
+            if (tokenProvider.validateToken(token)) {
+                // 토큰이 유효한 경우
+                Authentication authentication = tokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                // 토큰이 유효하지 않으면(만료 등), SecurityContext 초기화
+                SecurityContextHolder.clearContext();
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Access token is expired or invalid.");
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);

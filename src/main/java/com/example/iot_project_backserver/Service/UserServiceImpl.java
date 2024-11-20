@@ -20,44 +20,8 @@ public class UserServiceImpl implements UserService {
     private PatientAssignmentRepository patientAssignmentRepository;
 
     @Override
-    public List<app_user> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public Optional<app_user> getUserById(String id) {
         return userRepository.findById(id);
-    }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Override
-    public app_user createUser(app_user newUser) {
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword())); // 비밀번호 암호화
-        return userRepository.save(newUser);
-    }
-
-    @Override
-    public Optional<app_user> updateUser(String id, app_user updatedUser) {
-        return userRepository.findById(id)
-                .map(existingUser -> {
-                    existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-                    existingUser.setName(updatedUser.getName());
-                    existingUser.setBirth(updatedUser.getBirth());
-                    existingUser.setPhone_num(updatedUser.getPhone_num());
-                    existingUser.setDivision(updatedUser.getDivision());
-                    return userRepository.save(existingUser);
-                });
-    }
-
-    @Override
-    public boolean deleteUser(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 
     @Override
