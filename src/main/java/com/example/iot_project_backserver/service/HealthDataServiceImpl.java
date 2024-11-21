@@ -142,7 +142,7 @@ public class HealthDataServiceImpl implements HealthDataService {
 
 
     // BodyTemp의 수치에 따라 Pandan 상태를 결정하는 메서드
-    private String BodyTempStatus(float bodydata) {
+/*    private String BodyTempStatus(float bodydata) {
         if (bodydata >= 36.5 && bodydata <= 37.5) {
             return "정상";
         } else if (bodydata > 37.5 && bodydata <= 38.0) {
@@ -155,6 +155,14 @@ public class HealthDataServiceImpl implements HealthDataService {
             return "저체온";
         } else {
             return "알 수 없음";
+        }
+    }*/
+// BodyTemp의 수치에 따라 Pandan 상태를 결정하는 메서드
+    private String BodyTempStatus(float bodydata) {
+        if (bodydata >= 36.0 && bodydata <= 37.5) {
+            return "정상";
+        } else {
+            return "비정상";
         }
     }
 
