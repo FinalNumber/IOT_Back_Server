@@ -9,6 +9,7 @@ import com.example.iot_project_backserver.Repository.Volunteer.DesiredVolunteerD
 import com.example.iot_project_backserver.Repository.Volunteer.VolunteerAssignmentRepository;
 import com.example.iot_project_backserver.Repository.Volunteer.VolunteerRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class VolunteerServiceImpl implements VolunteerService {
 
     private final DesiredVolunteerDateRepository desiredVolunteerDateRepository;
     private final VolunteerAssignmentRepository volunteerAssignmentRepository;
     private final VolunteerRepository volunteerRepository;
     private final UserRepository userRepository;
-
-    @Autowired
-    public VolunteerServiceImpl(DesiredVolunteerDateRepository desiredVolunteerDateRepository,
-                                VolunteerAssignmentRepository volunteerAssignmentRepository,
-                                VolunteerRepository volunteerRepository,
-                                UserRepository userRepository) {
-        this.desiredVolunteerDateRepository = desiredVolunteerDateRepository;
-        this.volunteerAssignmentRepository = volunteerAssignmentRepository;
-        this.volunteerRepository = volunteerRepository;
-        this.userRepository = userRepository;
-    }
 
     // DesiredService 관련 구현
     @Override

@@ -28,13 +28,7 @@ public class TokenRefreshController {
 
         try {
             String newAccessToken = tokenProvider.validateAndGenerateNewAccessToken(refreshToken);
-            System.out.println("갱신 진행중입니다.");
-            System.out.println("갱신 진행중입니다.");
-            System.out.println("갱신 진행중입니다.");
-            System.out.println("갱신 진행중입니다.");
-            System.out.println("갱신 진행중입니다.");
-            System.out.println("갱신 진행중입니다.");
-            return ResponseEntity.ok(Collections.singletonMap("accessToken", newAccessToken));
+            return ResponseEntity.ok(newAccessToken);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired refresh token");
         }

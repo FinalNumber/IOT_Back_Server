@@ -150,14 +150,6 @@ public class UserController {
     @PostMapping("/medicalname")
     public ResponseEntity<Map<String, String>> medicalname(@RequestBody Map<String, String> requestData) {
         String userid = requestData.get("userid");
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-
 
         // patient_assignment 테이블에서 userid에 해당하는 레코드를 조회
         Optional<patient_assignment> assignment = medicalService.findByUserid(userid);
@@ -181,23 +173,4 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
     }
-
-    /*@PostMapping("/tokencheck")
-    public ResponseEntity<Map<String, String>> tokencheck(@RequestBody Map<String, String> requestData) {
-        String userid = requestData.get("userid");
-        String refreshToken = requestData.get("refreshToken");
-
-        // 리프레시 토큰 검증
-        boolean isTokenValid = volunteerService.validateRefreshToken(userid, refreshToken);
-        System.out.println("Is token valid: " + isTokenValid);
-
-        Map<String, String> response = new HashMap<>();
-        if (!isTokenValid) {
-            response.put("status", "TokenInvalid");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            response.put("status", "success");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }*/
 }
