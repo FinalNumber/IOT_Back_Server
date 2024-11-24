@@ -4,6 +4,7 @@ import com.example.iot_project_backserver.Entity.Medical.patient_assignment;
 import com.example.iot_project_backserver.Entity.User.required_measurements;
 import com.example.iot_project_backserver.Service.MedicalService;
 import com.example.iot_project_backserver.Service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +15,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class MedicalController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MedicalService medicalService;
+    private final UserService userService;
+    private final MedicalService medicalService;
 
     @PostMapping("/searchpatient") // 의료진이 환자를 추가하기 위해 검색
     public ResponseEntity<Map<String, Object>> searchpatient(@RequestBody Map<String, String> requestData) {
