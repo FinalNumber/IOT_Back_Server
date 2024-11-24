@@ -43,10 +43,8 @@ public class MedicalController {
             }
         } else {
             List<Map<String, String>> userInfoList = userService.getUserInfoByName(searchdata);
-
             if (!userInfoList.isEmpty()) {
                 response.put("status", "success");
-
                 // 여러 개의 유저 정보를 리스트로 담아 response에 추가
                 List<Map<String, String>> userData = new ArrayList<>();
                 for (Map<String, String> userInfo : userInfoList) {
@@ -55,13 +53,11 @@ public class MedicalController {
                     userMap.put("name", userInfo.get("name"));
                     userData.add(userMap);
                 }
-
                 response.put("data", userData);
             } else {
                 response.put("status", "DataEmpty");
                 response.put("data", null);
             }
-
             return ResponseEntity.ok(response);
         }
     }

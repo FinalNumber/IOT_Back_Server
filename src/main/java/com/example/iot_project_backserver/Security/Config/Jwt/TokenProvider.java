@@ -14,16 +14,11 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class TokenProvider {
 
     private final JwtProperties jwtProperties;
-
-    public TokenProvider(JwtProperties jwtProperties) {
-        this.jwtProperties = jwtProperties;
-        System.out.println("TokenProvider instantiated with JWT Properties.");
-    }
 
     private Key getSigningKey() {
         byte[] keyBytes = Base64.getDecoder().decode(jwtProperties.getSecretKey());
