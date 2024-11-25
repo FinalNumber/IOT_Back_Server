@@ -104,7 +104,7 @@ public class HealthDataServiceImpl implements HealthDataService {
     @Override
     public BodyTemp saveBodyTempData(BodyTemp bodyTemp) {
         // 사용자 ID가 유효한지 확인
-        if (!userRepository.existsByUserId(bodyTemp.getUserId())) {
+        if (!userRepository.existsByUserid(bodyTemp.getUserId())) {
             throw new CustomException("유효하지 않은 사용자 ID입니다."); // 유효하지 않은 ID일 경우 보낼 예외 메시지
         }
 
@@ -241,8 +241,8 @@ public class HealthDataServiceImpl implements HealthDataService {
     }
 
     // ID 유효성 검사
-    private void validateUserId(String userId) {
-        if (!userRepository.existsByUserId(userId)) {
+    private void validateUserId(String userid) {
+        if (!userRepository.existsByUserid(userid)) {
             throw new CustomException("유효하지 않은 사용자 ID입니다.");
         }
     }
