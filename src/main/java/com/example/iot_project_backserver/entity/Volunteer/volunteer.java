@@ -1,4 +1,4 @@
-package com.example.iot_project_backserver.entity;
+package com.example.iot_project_backserver.entity.Volunteer;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,13 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class app_user {
-
+public class volunteer {
     @Id
-    private String userid;
-    private String password;
-    private String name;
-    private String birth;
-    private String phone_num;
-    private String division;
+    private String volunteerid;
+    private int volunteertime;
 }
