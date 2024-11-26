@@ -15,16 +15,17 @@ public class ECG {
         @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성
         private Long id;
 
+        @Column(name = "userid")
         private String userId; // 사용자 ID
 
         @ElementCollection
-        @CollectionTable(name = "ecg_ecgdata", joinColumns = @JoinColumn(name = "ecg_id"))
+        @CollectionTable(name = "ecg_ecgdata", joinColumns = @JoinColumn(name = "ecgid"))
         @Column(name = "ecgdata")
         private List<Float> ecgdata; // 측정 데이터
 
         private String device_id;
 
         @ElementCollection
-        @CollectionTable(name = "ecg_everages", joinColumns = @JoinColumn(name = "ecg_id"))
+        @CollectionTable(name = "ecgaverages", joinColumns = @JoinColumn(name = "ECGID"))
         private List<EcgAverage> averages;//평균값 리스트 저장
 }
