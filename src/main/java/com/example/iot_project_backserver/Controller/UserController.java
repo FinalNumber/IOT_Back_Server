@@ -173,4 +173,19 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
     }
+
+    @PostMapping("/medicalchart")
+    public ResponseEntity<Map<String, String>> medicalchart(@RequestBody Map<String, String> requestData) {
+        String userid = requestData.get("userid");
+
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+        System.out.println(userid);
+
+
+        return null;
+    }
 }

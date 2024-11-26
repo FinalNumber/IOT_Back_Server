@@ -62,7 +62,7 @@ public class HealthDataController {
 
     @PostMapping("/ecg")
     public ResponseEntity<String> saveECGData(@RequestBody ECG ecg) {
-        modelDataService.createECGDataCSV(ecg);
+        //modelDataService.createECGDataCSV(ecg);
         healthDataService.processAndSaveECGData(ecg);
         return ResponseEntity.ok("ECG data processed and saved successfully.");
     }
