@@ -10,6 +10,6 @@ import lombok.Setter;
 public class EcgAverage {
 
     private Float averageValue;
-    private String userId;
+    private String userid;
 
 }

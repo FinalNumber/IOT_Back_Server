@@ -1,5 +1,6 @@
 package com.example.iot_project_backserver.repository.User;
 
+import com.example.iot_project_backserver.entity.EcgAverage;
 import com.example.iot_project_backserver.entity.User.app_user;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -15,7 +15,7 @@ public class ECG {
         @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키 생성
         private Long id;
 
-        private String userId; // 사용자 ID
+        private String userid; // 사용자 ID
 
         @ElementCollection
         @CollectionTable(name = "ecg_ecgdata", joinColumns = @JoinColumn(name = "ecg_id"))
@@ -25,6 +25,10 @@ public class ECG {
         private String device_id;
 
         @ElementCollection
-        @CollectionTable(name = "ecg_everages", joinColumns = @JoinColumn(name = "ecg_id"))
-        private List<EcgAverage> averages;//평균값 리스트 저장
+        @CollectionTable(name = "ecg_averages", joinColumns = @JoinColumn(name = "ecg_id"))
+        @AttributeOverrides({
+                @AttributeOverride(name = "averageValue", column = @Column(name = "averagevalue")),
+                @AttributeOverride(name = "userid", column = @Column(name = "userid"))
+        })
+        private List<EcgAverage> averages;
 }

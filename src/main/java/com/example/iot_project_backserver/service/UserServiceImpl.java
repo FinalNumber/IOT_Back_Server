@@ -1,6 +1,8 @@
 package com.example.iot_project_backserver.service;
 
+import com.example.iot_project_backserver.entity.EcgAverage;
 import com.example.iot_project_backserver.entity.User.app_user;
+import com.example.iot_project_backserver.repository.EcgRepository;
 import com.example.iot_project_backserver.repository.Medical.PatientAssignmentRepository;
 import com.example.iot_project_backserver.repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EcgRepository ecgRepository;
     @Autowired
     private PatientAssignmentRepository patientAssignmentRepository;
 
@@ -56,5 +61,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<app_user> findUserByUserid(String userid) {
         return Optional.ofNullable(userRepository.findByUserid(userid).orElse(null));
+    }
+
+    @Override
+    public List<Float> getAverageValuesByUserId(String userid) {
+        // ECG 엔티티에서 해당 userid를 가진 데이터를 필터링
+        return ecgRepository.findByUserid(userid)
+                .stream()
+                .flatMap(ecg -> ecg.getAverages().stream()) // 평균 리스트를 평탄화
+                .map(EcgAverage::getAverageValue) // 평균값만 추출
+                .collect(Collectors.toList());
     }
 }

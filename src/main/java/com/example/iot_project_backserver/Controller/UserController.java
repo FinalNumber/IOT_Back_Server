@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -175,17 +176,14 @@ public class UserController {
     }
 
     @PostMapping("/medicalchart")
-    public ResponseEntity<Map<String, String>> medicalchart(@RequestBody Map<String, String> requestData) {
-        String userid = requestData.get("userid");
+    public ResponseEntity<Map<String, Object>> medicalchart(@RequestBody Map<String, String> requestData) {
+        String userId = requestData.get("userid");
+        List<Float> averageValues = userService.getAverageValuesByUserId(userId);
 
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
-        System.out.println(userid);
+        Map<String, Object> response = new HashMap<>();
+        response.put("userid", userId);
+        response.put("averageValues", averageValues);
 
-
-        return null;
+        return ResponseEntity.ok(response);
     }
 }

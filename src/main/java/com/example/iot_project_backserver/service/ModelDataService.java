@@ -23,7 +23,7 @@ public class ModelDataService implements ModelData {
 
         // 데이터 준비
         List<Object> row = new ArrayList<>();
-        row.add(ecg.getUserId());
+        row.add(ecg.getUserid());
         row.addAll(ecg.getEcgdata());
 
         // 엑셀 파일 생성/추가
@@ -43,7 +43,7 @@ public class ModelDataService implements ModelData {
 
         // 데이터 준비
         List<Object> row = new ArrayList<>();
-        row.add(airflow.getUserId());
+        row.add(airflow.getUserid());
         row.addAll(airflow.getAirflowdata());
 
         // 엑셀 파일 생성/추가
@@ -63,7 +63,7 @@ public class ModelDataService implements ModelData {
 
         // 데이터 준비
         List<Object> row = new ArrayList<>();
-        row.add(eog.getUserId());
+        row.add(eog.getUserid());
         row.addAll(eog.getEogdata());
 
         // 엑셀 파일 생성/추가
@@ -83,7 +83,7 @@ public class ModelDataService implements ModelData {
 
         // 데이터 준비
         List<Object> row = new ArrayList<>();
-        row.add(emg.getUserId());
+        row.add(emg.getUserid());
         row.addAll(emg.getEmgdata());
 
         // 엑셀 파일 생성/추가
@@ -104,7 +104,7 @@ public class ModelDataService implements ModelData {
 
         // 데이터 준비
         List<Object> row = new ArrayList<>();
-        row.add(gsr.getUserId());
+        row.add(gsr.getUserid());
         row.addAll(gsr.getGsrdata());
 
         // 엑셀 파일 생성/추가
