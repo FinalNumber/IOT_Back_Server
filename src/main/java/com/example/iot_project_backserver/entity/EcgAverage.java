@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class EcgAverage {
 
-    private Float averageValue;
+    private Float EcgAverageValue;
     private String userid;
 
 }

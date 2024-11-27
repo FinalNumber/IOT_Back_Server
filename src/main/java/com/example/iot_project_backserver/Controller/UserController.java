@@ -178,11 +178,11 @@ public class UserController {
     @PostMapping("/medicalchart")
     public ResponseEntity<Map<String, Object>> medicalchart(@RequestBody Map<String, String> requestData) {
         String userId = requestData.get("userid");
-        List<Float> averageValues = userService.getAverageValuesByUserId(userId);
+        List<Float> EcgAverageValues = userService.getEcgAverageValuesByUserId(userId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("userid", userId);
-        response.put("averageValues", averageValues);
+        response.put("EcgAverageValues", EcgAverageValues);
 
         return ResponseEntity.ok(response);
     }

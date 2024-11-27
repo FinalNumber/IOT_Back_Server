@@ -64,12 +64,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Float> getAverageValuesByUserId(String userid) {
+    public List<Float> getEcgAverageValuesByUserId(String userid) {
         // ECG 엔티티에서 해당 userid를 가진 데이터를 필터링
         return ecgRepository.findByUserid(userid)
                 .stream()
                 .flatMap(ecg -> ecg.getAverages().stream()) // 평균 리스트를 평탄화
-                .map(EcgAverage::getAverageValue) // 평균값만 추출
+                .map(EcgAverage::getEcgAverageValue) // 평균값만 추출
                 .collect(Collectors.toList());
     }
 }

@@ -91,7 +91,7 @@ public class HealthDataServiceImpl implements HealthDataService {
                 averages -> averages.stream()
                         .map(avg -> {
                             EcgAverage ecgAverage = new EcgAverage();
-                            ecgAverage.setAverageValue(avg);
+                            ecgAverage.setEcgAverageValue(avg);
                             ecgAverage.setUserid(ecg.getUserid());
                             return ecgAverage;
                         })
