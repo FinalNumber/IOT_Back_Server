@@ -659,6 +659,9 @@ public class HealthDataServiceImpl implements HealthDataService {
 
     // 평균값 계산
     private List<Float> calculateAverages(List<Float> data, int groupSize) {
+        if (data == null || data.isEmpty()) {
+            throw new IllegalArgumentException("데이터가 null이거나 비어있습니다.");
+        }
         List<Float> averages = new ArrayList<>();
         int dataSize = data.size();
         for (int i = 0; i < dataSize; i += groupSize) {
