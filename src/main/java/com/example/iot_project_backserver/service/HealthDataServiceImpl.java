@@ -315,7 +315,7 @@ public class HealthDataServiceImpl implements HealthDataService {
             payload.put("ecgdata", ecg.getEcgdata());
 
             // FastAPI 서버 URL
-            String fastApiUrl = "http://127.0.0.1:8082/predict";
+            String fastApiUrl = "http://127.0.0.1:8082/ecg";
 
             // RestTemplate 생성 및 JSON Content-Type 설정
             RestTemplate restTemplate = new RestTemplate();
