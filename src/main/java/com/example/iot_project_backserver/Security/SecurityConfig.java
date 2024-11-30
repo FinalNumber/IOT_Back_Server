@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용하지 않음
                 .and()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/idcheck", "/signup", "/login", "/refresh", "/ws/**",  "/127.0.0.1/**").permitAll() // 인증 없이 접근 가능한 엔드포인트
+                        .requestMatchers("/idcheck", "/signup", "/login", "/refresh", "/ws/**",  "/127.0.0.1/**" , "https://port-0-iot-healthcare-1272llwukgaeg.sel5.cloudtype.app/**").permitAll() // 인증 없이 접근 가능한 엔드포인트
                         .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
                 .addFilterBefore(new TokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class) // 필터 추가
@@ -52,7 +52,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000")); // 프론트엔드 URL
+
+        // 허용할 Origin 추가
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://port-0-iot-healthcare-1272llwukgaeg.sel5.cloudtype.app"
+        ));
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
@@ -62,4 +68,17 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+/*    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000")); // 프론트엔드 URL
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+        configuration.setAllowCredentials(true); // 자격 증명 허용
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }*/
 }
